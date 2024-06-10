@@ -1,0 +1,117 @@
+<?php
+
+require 'configure.php';
+
+$sp_name = mysqli_escape_string($conn,$_POST['sp_name']);
+$sp_speciality = mysqli_escape_string($conn,$_POST['speciality']);
+$sp_category = mysqli_escape_string($conn,$_POST['category']);
+$sp_location = mysqli_escape_string($conn,$_POST['sp_location']);
+$sp_email = mysqli_escape_string($conn,$_POST['sp_email']);
+$sp_password  = mysqli_escape_string($conn,$_POST['sp_password']);
+$cpassword = mysqli_escape_string($conn,$_POST['confirm_password']);
+$sp_phonenumber = mysqli_escape_string($conn,$_POST['sp_phonenumber']);
+$sp_phonenumber2 = mysqli_escape_string($conn,$_POST['sp_phonenumber1']);
+$sp_experience = mysqli_escape_string($conn,$_POST['sp_experience']);
+$sp_bio = mysqli_escape_string($conn,$_POST['sp_bio']);
+$sp_ratings = mysqli_escape_string($conn,$_POST['sp_ratings']);
+$secret_password = sha1($sp_password);
+$verified  = mysqli_escape_string($conn,$_POST['verified']);
+$date = date("D, F d, Y g:iA", strtotime('+1 hours'));
+$vkey=md5(time().$sp_email);
+
+
+
+
+
+
+
+if (empty($sp_name.$sp_email.$sp_password.$cpassword)) { echo"All fields are required";
+  
+}
+
+elseif ($sp_name=='') { echo"Full name field is required";  
+}
+elseif ($sp_email=='') {echo"Email field is required";
+
+}
+
+elseif(!filter_var($sp_email,FILTER_VALIDATE_EMAIL)){echo"Email format not supported";}
+elseif (empty($cpassword)) { echo"Confirm password field is required";
+  
+}
+
+elseif (empty($sp_password)) { 
+	echo"Password field is required";
+  
+}
+
+elseif ($sp_password!=$cpassword) {
+ echo"Password mismatch!!";
+  
+}
+else {
+$imageFolder="../uploads/service-provider/";
+$basename=basename($_FILES["imager"]["name"]);
+$allowed_extensions = array("jpg",
+    "jpeg",
+    "png",
+      "JPG",
+    "JPEG",
+    "PNG");
+$maxsize=5242880;//5mb
+$imagePath=$imageFolder.$basename;
+$file_extension=pathinfo($_FILES["imager"]["name"],PATHINFO_EXTENSION);
+$imageExtension=pathinfo($imagePath,PATHINFO_EXTENSION);
+$ImageSize=$_FILES['imager']['size'];
+$image_temp_name=$_FILES["imager"]["tmp_name"];
+if(!in_array($file_extension,$allowed_extensions)){ 
+	echo "Please upload valid Image in png and Jpeg only";
+    
+}
+elseif (($_FILES["imager"]["size"] > 2000000)) {
+    
+   echo"Image file size limit is exceeded"; 
+
+}
+
+else {
+
+$upload=move_uploaded_file($image_temp_name,$imagePath); 
+$check="select * from service_providers where sp_email='$sp_email'";
+$we=mysqli_query($conn,$check);
+if ($we->num_rows>0) { echo"This account already exist";
+}
+
+elseif ($we->num_rows==0) {
+
+
+$tyr="INSERT INTO service_providers(sp_name,sp_img,sp_category,sp_speciality,sp_location,sp_email,sp_password,sp_phonenumber1,sp_phonenumber2,pricing,sp_experience,sp_bio,ratings,sp_verified,vkey,date) VALUES ('".htmlspecialchars($sp_name)."','".htmlspecialchars($imagePath)."','".htmlspecialchars($sp_category)."','".htmlspecialchars($sp_speciality)."','".htmlspecialchars($sp_location)."','".htmlspecialchars($sp_email)." ','".htmlspecialchars($secret_password)."','".htmlspecialchars($sp_phonenumber)."','".htmlspecialchars($sp_phonenumber2)."','0','".htmlspecialchars($sp_experience)."','".htmlspecialchars($sp_bio)."','".htmlspecialchars($sp_ratings)."','".htmlspecialchars($verified)."','".htmlspecialchars($vkey)."','".$date."')";
+
+
+
+$cls= mysqli_query($conn,$tyr);
+
+if ($cls) {
+
+  echo "1";
+}
+
+else{
+
+echo mysqli_error($cls);
+ 
+}
+
+
+
+}
+
+
+}
+
+
+}
+
+
+?>
+
