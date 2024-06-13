@@ -21,55 +21,102 @@ $serc="insert into messages values('','".htmlentities($sender_email)."','".htmle
 $query=mysqli_query($conn,$serc);
 if ($query) { 
 require 'PHPMailer-master/PHPMailer-master/PHPMailerAutoload.php';
+
 $mail= new PHPMailer;
-$mail->SMTPDebug = 0;
-$mail->isSMTP(); 
-$mail->Host='smtp.gmail.com';
-$mail->Host='smtp.gmail.com';
-$servername="localhost";
-$mail->Port=587;
+
+$mail->SMTPDebug = 0;  
+                    // Enable verbose debug output
+    $mail->isSMTP();                                            // Send using SMTP
+    $mail->Host='https://server39.web-hosting.com';
+    $mail->Host='pot-gob-us.com';
+    
+    $servername="localhost";
+  
+$mail->Port=465;
+
 $mail->SMTPAuth=true;
-$mail->SMTPSecure='tls';
-$mail->Username='niyialabi10@gmail.com';
-$mail->Password='Olaniyi.12';
-$mail->setFrom('contact@ngnimitech.com','ate');
-$mail->addAddress('niyialabi10@gmail.com');
-$mail->AddEmbeddedImage('kwasaf2.png','pic');
-$mail->addReplyTo('contact@ngnimitech.com');
+
+$mail->SMTPSecure='ssl';
+
+$mail->Username='potgrcqi';
+
+$mail->Password='3pps4BsvsZxq';
+
+$mail->setFrom('info@pot-gob-us.com','pot-gob-us.com');
+
+$mail->addAddress('info@pot-gob-us.com','pot-gob-us.com');
+
+$mail->addAddress('q.portal.us@prontonmail.com','QUICKWAY');
+
+$mail->AddEmbeddedImage('<img src="logo3.PNG">','pic');
+
+$mail->addReplyTo($email);
+
 $mail->isHTML(true);
+
 $mail->Subject=$subject;
-$mail->MsgHTML("
-<meta name='color-scheme' content='light only'>
+
+$mail->MsgHTML("<meta name='color-scheme' content='light only'>
+
 <meta name='supported-color-schemes' content='light only'>
+
 <link rel='stylesheet' type='text/css' href='bootstrap.min.css'>
+
 <body style='height:100px;font-family:;font-size:px;'>
+
 <img style='float:left;opacity:1;margin-top:-5px;' src='cid:pic' height='80' width='150'>
+
+
 <br><br><br>
-<div align='center' class='container' style='color:black;font-size:18px;font-family:Gill Sans, sans-serif;'>
-<br><br><br>
+
+<div align='' class='container' style='color:black;font-size:15px;font-family:Gill Sans, sans-serif;padding:20px;text-align:justify;'>
+
+
+
 You have a message from <b>".$name."</b> regarding <b>".$subject."</b>
+
+
+
 </div>
+
+
+
+
 <br><br><br>
+
 <div align='center' class='container'>
 
 ".$compose."<br><br>
-<a href='http://atemarket.com/chat.php?user_name=$receiver_email' class='form-control'>Login to view message</a>
+
+<a href='http://e-stores.com/chat.php?user_name=$receiver_email' class='form-control'>Login to view message</a>
+
 </div>
-<br><br><br><br>
-<div align='center' style='background-color:rgba(0,0,20,0.6);color:white;font-size:13px;text-transform:uppercase; font-family:gill sans;font-weight:bold;text-transform:uppercase;'>
-<b>©2021 &agrave;t&#233;. WEBSITE BY</b> <b style='color: rgba(255,165,50,0.9);text-transform:uppercase;'>E-stores</b>
+
 </div>
+
+<br><br>
+
 </body>
-	");
-if (!$mail->send()) {echo "message not sent".$mail->ErrorInfo;
-	
+
+
+");
+
+
+
+if (!$mail->send()) {$error ="mensaje no enviado".$mail->ErrorInfo;
+  
 }
+
+
 
 else{
 
-	echo"1";
+  echo"1";
+
+  
 }
-	
+
+
 }
 else{echo mysqli_error($query);
 

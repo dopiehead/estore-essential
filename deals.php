@@ -1575,27 +1575,40 @@ border-radius: 0px 25px 25px 0px;
 </div>
 <br>
 
+<br><br>
 <div class="container">
 
+<?php
+require 'engine/configure.php';
+$featured = mysqli_query($conn,"SELECT * FROM item_detail where sold = 0 and featured = 1 order by id desc");
+if ($featured->num_rows>0) { ?>
+<h6><b style="color: white; background-color: rgba(0,70,90,0.8);padding: 5px;">Featured</b></h6><br>
+<div class="assets_container featured container">
+<?php
+while ($getfeaturedProducts = mysqli_fetch_array($featured)) { ?>
+<div class="package" style="border:1px solid rgba(0,0,0,0.1);margin-right:25px;">
+<span style="padding:5px;" id="data_name"><?php echo$getfeaturedProducts['product_name']?></span><br>
+<span style="opacity: 0.5" id="data_price">From<br></span>
+<span style="opacity: 0.5" id="data_price"> <?php echo$getfeaturedProducts['product_price']?></span>
+<span style="opacity: 0.5" id="data_price"> <?php echo" $ ".round($getfeaturedProducts['product_price']/$dollar_rate)?></span><br>
+
+<a href="product-details.php?id=<?php echo$id ?>"><img style="height: 150px; width:200px;" src='<?php echo$getfeaturedProducts['product_image']?>' ></a><br>
+</div>
+<?php } echo'</div>'; } else{   ?>
 <div class="row">
-
 <div id="coca_cola" class="col-md-6">
-
-  <img src="assets/img/coca_cola.png">
-
+<img src="assets/img/coca_cola.png">
 </div>
-
-
 <div id="coca_cola" class="col-md-6">
-
-  <img src="assets/img/coca_cola.png">
-
-
+<img src="assets/img/coca_cola.png">
 </div>
-
-</div>
-
 <br>
+</div>
+<?php    }     ?>
+<br>
+
+
+
 
 
 <div class="discount_main">
@@ -2075,6 +2088,28 @@ $('#search').val("");
 });
 
 </script>
+
+<script>
+  
+$('.featured').flickity({
+ cellAlign: 'left',
+contain: true,
+autoPlay:true,
+freeScroll: true,
+ friction:0.52,
+wrapAround: true,
+contain: true,
+prevNextButtons: false,
+
+});
+
+</script>
+
+
+
+
+
+
 
 <!------------------------------------------btn-scroll--------------------------------------------------->
 

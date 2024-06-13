@@ -26,7 +26,7 @@ require 'engine/configure.php';
 
 if (isset( $_POST['user_type']) && !empty($_POST['user_type']) && $_POST['user_type']=='product') {
     
-$sql = "SELECT product_name, product_price,product_category FROM item_detail";
+$sql = "SELECT product_name, product_price,product_category,product_location,product_address FROM item_detail";
 
     $result = $conn->query($sql);
     $products = [];
@@ -37,6 +37,10 @@ $sql = "SELECT product_name, product_price,product_category FROM item_detail";
                 'name' => $row['product_name'],
 
                 'price' => $row['product_price'],
+
+                'location' => $row['product_location'],
+
+                'address' => $row['product_address'],
 
             ];
         }
@@ -61,9 +65,13 @@ $sql = "SELECT product_name, product_price,product_category FROM item_detail";
 
             $productPrice = $product['price'];
 
-if (preg_match('/\b' . preg_quote($productName, '/') . '\b/', $search) && preg_match('/\b' . preg_quote($productPrice, '/') . '\b/', $search)) {
+            $productLocation = $product['location'];
 
-    $getproduct= mysqli_query($conn,"SELECT user_id FROM item_detail WHERE product_name LIKE '%$productName%' AND product_price <=  '$productPrice'   GROUP BY user_id");
+            $productAddress = $product['address'];
+
+if (preg_match('/\b' . preg_quote($productName, '/') . '\b/', $search) && preg_match('/\b' . preg_quote($productPrice, '/') . '\b/', $search) && preg_match('/\b' . preg_quote($productLocation, '/') . '\b/', $search) && preg_match('/\b' . preg_quote($productAddress, '/') . '\b/', $search)) {
+
+    $getproduct= mysqli_query($conn,"SELECT user_id FROM item_detail WHERE product_name LIKE '%$productName%' AND product_price <= '$productPrice'  AND product_location like '%$productLocation%' AND product_address like '%$productAddress%'  GROUP BY user_id");
 
 
 
@@ -121,7 +129,7 @@ if (preg_match('/\b' . preg_quote($productName, '/') . '\b/', $search) && preg_m
 if ((isset( $_POST['user_type']) && !empty($_POST['user_type']) && $_POST['user_type']=='service provider')) {
     
 
-$sql = "SELECT sp_name, pricing,sp_category FROM service_providers";
+$sql = "SELECT sp_name, pricing,sp_category,sp_location FROM service_providers";
     $result = $conn->query($sql);
     $products = [];
    if ($result->num_rows > 0) {
@@ -131,6 +139,8 @@ $sql = "SELECT sp_name, pricing,sp_category FROM service_providers";
                 'name' => $row['sp_category'],
 
                 'price' => $row['pricing'],
+
+                'location' => $row['sp_location'],
 
             ];
         }
@@ -151,13 +161,15 @@ $sql = "SELECT sp_name, pricing,sp_category FROM service_providers";
 
         foreach ($products as $product) {
 
-            $productName = $product['sp_category'];
+            $productName = $product['category'];
 
             $productPrice = $product['pricing'];
 
-if (preg_match('/\b' . preg_quote($productName, '/') . '\b/', $search) && preg_match('/\b' . preg_quote($productPrice, '/') . '\b/', $search)) {
+            $productLocation = $product['location'];
 
-    $getproduct= mysqli_query($conn,"SELECT sp_id FROM service_providers WHERE sp_category LIKE '%$productName%' AND pricing <=  '$productPrice'   GROUP BY sp_id");
+if (preg_match('/\b' . preg_quote($productName, '/') . '\b/', $search) && preg_match('/\b' . preg_quote($productPrice, '/') . '\b/', $search) && preg_match('/\b' . preg_quote($productLocation, '/') . '\b/', $search)) {
+
+    $getproduct= mysqli_query($conn,"SELECT sp_id FROM service_providers WHERE sp_category LIKE '%$productName%' AND pricing <=  '$productPrice'   AND sp_location like  '%$productLocation%'   GROUP BY sp_id");
 
 
 

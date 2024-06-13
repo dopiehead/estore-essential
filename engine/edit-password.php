@@ -1,8 +1,32 @@
-<?php 
-if (!isset($_SESSION)) {
-	header("location:login.php");
-}
-error_reporting(E_ALL ^ E_NOTICE);
+<?php
+
+session_start();
+
+error_reporting(E_ALL ^ E_NOTICE); 
+
+
+if (!isset($_SESSION['admin_id'])) { ?>
+  
+<script>
+
+alert("You are not admin");
+
+setTimeout(function() {
+
+window.location.href ='login.php';
+  
+},2500);
+  
+</script>
+
+<?php } ?>
+
+
+
+
+
+
+<?php
 require 'configure.php';
 session_start();
 $myid = $_SESSION['admin_id'];

@@ -1,9 +1,27 @@
 
-<?php session_start(); ?>
+<?php session_start(); ?><?php
+
+if (!isset($_SESSION['admin_id'])) { ?>
+  
+<script>
+
+alert("You are not admin");
+
+setTimeout(function() {
+
+window.location.href ='login.php';
+  
+},2500);
+
+</script>
+
+<?php } ?>
+
+
 <!DOCTYPE html>
 <html>
 <head>
-  
+
 <title>E-stores | admin</title>
   <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
 
@@ -28,6 +46,13 @@ h1 img{
 
   margin-left: 10px;
 }
+
+
+#btn-changepassword{
+
+  background-color: rgba(255,165,50,1);
+}
+
 
 
 
@@ -256,6 +281,7 @@ cursor: pointer;
   
 font-weight: bold;
 font-size: 0.8rem;
+color: #17a2b8;
 
     }
 
@@ -921,6 +947,7 @@ display: none;
 <div id="popup-password">
 <a onclick="togglepassword()" id="close-password">&times;</a>
 <h6 align="center" id="h6">Change Password</h6>
+<hr>
 <div class="container">
 
 <?php
@@ -945,7 +972,7 @@ require 'engine/configure.php';
   <input style="font-size:0.8rem;" type="password" name="password" id="password" class="form-control" value="" placeholder="Enter new password"><br>
   <input style="font-size:0.8rem;" type="password" name="cpassword" id="cpassword" class="form-control" value="" placeholder="Confirm password" >
   <label style="font-size:0.8rem;">User name: <b>Admin</b></label> 
-  <input type="submit" name="submit" id="btn-changepassword" value="Update password" class="btn btn-danger form-control" style="color: white;font-size:0.7rem !important;"><br>
+  <input type="submit" name="submit" id="btn-changepassword" value="Update password" class="btn btn-changepassword form-control" style="color: white;font-size:0.7rem !important;"><br>
 <div align="center" style="display: none;" id="loading-image"><img id="loader" height="50" width="50" src="loading-image.GIF"></div>
 </form>
 </div>
@@ -1070,6 +1097,8 @@ $("#popup-password").hide(1000);
 }
 else{
  swal({
+
+ title:"Oops!!", 
 icon:"error",
 text:response
 });
@@ -1226,6 +1255,10 @@ $("#subsettings").toggleClass("active");
 <script type="text/javascript">
 var postData = "text";
 $(document).on('click','.delete_all',function(e){
+  if(!confirm('Are you sure you want to delete this message?')){
+            e.preventDefault();
+            return false;
+       
 var user_type = $("#user_type").val();
 var id = $(".check").val();
 e.preventDefault();
@@ -1260,6 +1293,8 @@ error: function(jqXHR, textStatus, errorThrown) {
 }
 
         });
+
+ }
 
     });
 

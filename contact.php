@@ -40,15 +40,28 @@ margin-left: 210px !important;
 
 @media only screen and (max-width:797px){
 #think{
-margin-left: 20px !important;
+margin-left: 25px !important;
 
 }
 }
 
 
+input[type=email],input[type=text],textarea{
+
+border:1px solid transparent;
+
+box-shadow: 0px 0px 4px rgba(0,0,0,0.4);
 
 
 
+}
+
+.btn-warning{
+
+box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.5);
+
+
+}
 
 
 .product_list h6{
@@ -504,6 +517,17 @@ font-weight: normal !important;
 }
 
 
+@media only screen and (max-width:767px){
+
+.nav_login{
+
+margin-left:40px !important;
+font-weight: normal !important;
+
+}
+
+}
+
 /*--------------------------------------------------------------
 # navigation bar mobile
 --------------------------------------------------------------*/
@@ -850,7 +874,9 @@ display: none;
 <div class="row">
 <div class="col-md-6">
 	
-<h6 class="container" style="color: white;text-align:left; color:darkblue;">Drop a message!!</h6>
+<h6 class="container" style="color: white;text-align:center; color:black;">Drop a message!!</h6>
+
+<hr style="border:2px solid red;width:10%;text-align: left;">
 
 
 </div>

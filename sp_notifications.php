@@ -1,5 +1,23 @@
 
 <?php session_start(); ?>
+
+<?php 
+
+if (!isset($_SESSION['sp_id'])) { ?>
+
+<script>
+  
+window.location.href='login.php';
+
+</script>
+
+<?php
+}
+?>
+
+
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -584,7 +602,7 @@ display: none;
 }
 
 
-.open-btn{display: block !important;font-size: 16px; margin-top: -6px;color: black;}
+.open-btn{display: block !important;font-size:px; margin-top:2px;color: black;}
 
 
 }
@@ -929,6 +947,7 @@ require 'engine/configure.php';
 
 $getNotification =mysqli_query($conn,"select * from sp_notifications where recipient_id ='".htmlspecialchars($_SESSION['sp_id'])."' and pending = 0 ");
 
+if ($getNotification->num_rows>0) {
 
 while ($row = mysqli_fetch_array($getNotification)) {
   
@@ -956,7 +975,10 @@ $message = $row['message'];
 </div>
 
 
-<?php } ?>
+<?php }  }  else{  echo"<div style='margin:120px 10px;opacity:0.7'><br><br>You have no notification yet<br></div>";      }
+
+
+?>
 
 
 

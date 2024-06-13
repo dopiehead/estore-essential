@@ -1,6 +1,7 @@
 
 <?php session_start();
 error_reporting(E_ALL ^ E_NOTICE);
+require_once 'engine/get-dollar.php';
 if (!isset($_SESSION["id"]) && !isset($_SESSION["business_id"]) && !isset($_SESSION["sp_id"] )) { 
 echo"<script>location.href='login.php'</script>";
 exit();
@@ -35,9 +36,6 @@ while ($businessRow = mysqli_fetch_array($getbuyer)) {
 }
 
 
-
-
-
 if (isset($_SESSION['sp_id'])) {
 $buyer = mysqli_escape_string($conn,$_SESSION['sp_id']);
 $getbuyer = mysqli_query($conn,"select * from service_providers where sp_id='".htmlspecialchars($buyer)."'");
@@ -70,6 +68,8 @@ $item = mysqli_query($conn,$cart_item);
 
 ?>
 
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -94,8 +94,6 @@ body{font-family: poppins;}
 h1 img{
 	margin-left: 10px;
 }
-
-
 
 #think{
 margin-left: 210px !important;
@@ -133,10 +131,6 @@ float: right;
 # navigation bar mobile
 --------------------------------------------------------------*/
 
-
-
-
-
 @media only screen and (max-width:1200px){
 
 .button_navigation{
@@ -170,7 +164,6 @@ margin-right:32px;
 font-weight: bold;
 
 }
-
 
 
 .button_navigation:hover{
@@ -239,8 +232,6 @@ color: white !important;
   margin-left: -350px;
 }
 
-
-
 @media only screen and (max-width:498px){
 
 
@@ -277,8 +268,6 @@ color: white !important;
 
 .category{
 
-
-
 margin-right:5px;
 font-size: 12px;
 border:1px solid rgba(0,0,0,0.2);
@@ -291,19 +280,11 @@ text-decoration: none;
 
 }
 
-
-
-
-
 }
-
-
-
 
 
 .category:hover{
 
-	
 background-color: skyblue;
 color:white;
 text-decoration: none;
@@ -416,9 +397,6 @@ border:1px solid transparent;
 	display: none !important;
 }
 
-
-
-
 .user_forms{
 	width: 100%;
 	margin-top: 30px;
@@ -431,7 +409,6 @@ border:1px solid transparent;
 
 
 }
-
 
 
 
@@ -489,20 +466,13 @@ border-spacing: 8px;
 	font-weight: bold;
 
 	font-size: 13px;
-
-
-
 }
 
 
 
 .payment_method {
 
-	
-
-	font-size: 12px;
-
-
+font-size: 12px;
 
 }
 
@@ -513,8 +483,6 @@ margin-top: 10px;
 	box-shadow: 0px 3px 15px rgba(0,0,0,0.3);
 	font-size: 13px;
 }
-
-
 
 
 /*--------------------------------------------------------------
@@ -570,14 +538,10 @@ width: 140px;
 	margin-top: 30px;
 }
 
-
-
-
-
-
-
 </style>
+
 </head>
+
 <body>
 
 	<!------------------------------------------Navigation bar--------------------------------------------------->
@@ -599,10 +563,8 @@ $product_name =preg_split('/\s+/', $product['product_name']);
 $product_location = $product['product_location'];
 $discount = $product['discount'];
 $price = $product['product_price'];
-$dollar = round($price/1500);
+$dollar = round($price/$dollar_rate);
 ?>
-
-
 
 <div class="nav-container container">
 
@@ -655,13 +617,6 @@ $dollar = round($price/1500);
 <br>
 </div>
 
-
-
-
-
-
-
-
 <!------------------------------------------Second part--------------------------------------------------->
 
 <div id="hide" class="hide">
@@ -680,14 +635,7 @@ $dollar = round($price/1500);
 
 </div>
 
-
-
-
-
-
-
 <br>
-
 
 <!------------------------------------------order summary--------------------------------------------------->
 
@@ -716,9 +664,6 @@ $price ="<span id='cart_price'>&#8358;".$price."</span> ";
 $dollar=" <span id='cart_price'>$".round($product['product_price']/1500)." </span><br>";}
 ?>
 
-
-
-	
 <td id="summary_name"><?php echo implode('&', $product_name);?></td>
 
 <td><?php if ($discount>0) {
@@ -737,14 +682,10 @@ $dollar=" <span id='cart_price'>$".round($product['product_price']/1500)." </spa
     # code...
    echo" $".$discount_price_dollar*$noofitem." | &#8358;".$discount_price_ngn*$noofitem;} else{ echo$_SESSION['product_price']=" &#8358;".$product['product_price']*$noofitem.",  $".round($product['product_price']/1500,2)*$noofitem;}?></td>
 
-
 </tr>
-
 
 <tr>
 	
-
-
 <td>Tax:</td>
 
 <td><span style="color: green;">+ $14.00</span></td>
@@ -755,12 +696,9 @@ $dollar=" <span id='cart_price'>$".round($product['product_price']/1500)." </spa
 
 <tr>
 	
-
-
 <td>Total</td>
 
 <td><span style="color: green;"><b><?php echo"14"+round($product['product_price']/1500,2)*$noofitem."dollar"; ?></b></span></td>
-
 
 <td><span style="color: green;"><b><?php echo$_SESSION['product_price'] = (14*1500)+($product['product_price'])*$noofitem."NGN"; ?></b></span></td>
 	
@@ -774,8 +712,7 @@ $dollar=" <span id='cart_price'>$".round($product['product_price']/1500)." </spa
 
 <br>
 
-
-	<!------------------------------------------payment method--------------------------------------------------->
+<!------------------------------------------payment method--------------------------------------------------->
 
 </form>
 
@@ -789,7 +726,7 @@ $dollar=" <span id='cart_price'>$".round($product['product_price']/1500)." </spa
 </div>
 
 
-<button class="btn btn-default form-control">Continue</button>
+<button class="btn btn-default form-control" onclick="payWithPaystack()">Continue</button>
 
 
 
@@ -818,8 +755,7 @@ include 'footer.php';
 ?>
 
 <script type="text/javascript">
-	
-	$('.numbering').load('engine/item-numbering.php');
+		$('.numbering').load('engine/item-numbering.php');
 </script>
 
 <!------------------------------------------btn-scroll--------------------------------------------------->
@@ -830,7 +766,31 @@ include 'footer.php';
 
 <script src="assets/js/overlay.js" type="text/javascript"></script>
 
-</body>
+<input type="hidden" name="email-address" id="email-address" value="<?php echo$userEmail?>">
+
+<input type="hidden" name="amount" id="amount" value="<?php echo$_SESSION['product_price']?>">
+
+<script>
+        function payWithPaystack() {
+            var handler = PaystackPop.setup({
+                key: 'pk_test_7580449c6abedcd79dae9c1c08ff9058c6618351', // Replace with your public key
+                email: document.getElementById('email-address').value,
+                amount: document.getElementById('amount').value * 100, // the amount value is in kobo
+                currency: 'NGN', // Use GHS for Ghana Cedis or USD for US Dollars
+                callback: function(response) {
+                    // handle successful transaction here
+                    var reference = response.reference;
+                    alert('Payment complete! Reference: ' + reference);
+                    window.location = "verify_transaction.php?reference=" + reference;
+                },
+                onClose: function() {
+                    alert('Transaction was not completed, window closed.');
+                },
+            });
+            handler.openIframe();
+        }
+    </script>
+
 
 <script >
 	
@@ -891,4 +851,7 @@ $('.btn-default').show();
 
 <a class=" btn-down" onclick="topFunction()">&#8593;</a>
 
+</body>
+
 </html>
+

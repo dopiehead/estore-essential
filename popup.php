@@ -97,8 +97,10 @@ $mydiscount = $row['discount'];
 
 <a class='addx btn btn-gift-picks form-control' style='color:rgba(0,0,0,0.6);' id="<?php echo$id?>">Gift picks</a> <br><br>
 
+<a class='addx btn  btn-subscribe form-control' style='color:rgba(0,0,0,0.6);' id="<?php echo$id?>">Pay to subcribe</a><br><br>
 
-<a class='addx btn btn-delete form-control' style='color:rgba(0,0,0,0.6);' id="<?php echo$id?>">Delete product</a> 
+<!--------------------------------------------- Delete product button--------------------------------------------------------------------------------------->
+<a class='addx btn btn-delete form-control' style='color:rgba(0,0,0,0.6);' id="<?php echo$id?>">Delete product</a>  <br><br>
 
 </div>
 </div>

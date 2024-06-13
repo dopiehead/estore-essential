@@ -9,10 +9,6 @@ echo"<script>location.href='admin.php'</script>";
 }
 
 
-
-
-
-
 if (!isset($_SESSION["id"]) && !isset($_SESSION["business_id"]) && !isset($_SESSION["sp_id"] )) { 
 echo"<script>location.href='login.php'</script>";
 exit();
@@ -349,7 +345,7 @@ font-size: 13px !important;
 
 position: relative;
 
-left:17%;
+left:16%;
 
 top:-36px;
 
@@ -458,7 +454,7 @@ font-size: 12px !important;
 
   margin-top: 10px;
 
- color: rgba(0,40,90,0.6) !important;
+ color: skyblue !important;
 
   font-size: 25px;
 
@@ -485,6 +481,18 @@ font-size: 12px !important;
 
 
 
+#highest{
+
+  margin-bottom: 10px;
+
+  margin-top: 10px;
+
+ color: skyblue !important;
+
+  font-size: 25px;
+
+  margin-left: 10px;
+}
 
 
 
@@ -522,7 +530,7 @@ font-size: 12px !important;
     width: 150px; /* Adjust to control the inner circle size */
     height: 150px; /* Adjust to control the inner circle size */
     border-radius: 50%;
-    background-color: white;
+    background-color:#f1f1f1;
   }
 
   
@@ -1145,9 +1153,14 @@ if ($countNotifications>0) {
 
 
 
-<img src="assets/img/circle.JPG">
+<div class="progress-circle">
+
+<span class="progress-text">70% Interaction</span>
 
 </div>
+
+</div>
+
 </div>
 
 <div class="col-md-4" id="target">
@@ -1158,13 +1171,14 @@ if ($countNotifications>0) {
 
  <span>
 
-<i id="higher" class="fa fa-circle"></i><b> 50% Target reached</b></span><img src="assets/img/Group3.png">
+<i id="highest" class="fa fa-circle"></i><b> 50% Target reached</b></span><img src="assets/img/Group3.png">
 
 </div>
 
 </div>
 
 <div class="col-md-4">
+
 <div style="border:2px solid rgba(0,0,0,0.1);padding: 5px;border-radius: 10px;">
 
   <h6 id="Engagements"><b>Engagements</b></h6><br>
@@ -1183,28 +1197,7 @@ if ($countNotifications>0) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
      </div>
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -584,7 +584,7 @@ font-size: 12px !important;
 
 position: relative;
 
-left:16%;
+left:16.5%;
 
 top:-37px;
 

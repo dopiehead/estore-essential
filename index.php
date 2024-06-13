@@ -1,56 +1,15 @@
-
 <?php 
 session_start();
 error_reporting(E_ALL ^ E_NOTICE);
-
 require 'engine/get-dollar.php';
-
-if (!empty($_SERVER['REMOTE_ADDR'])) {
-$ipaddress = $_SERVER['REMOTE_ADDR'];
-require 'engine/configure.php';
-$checkIp = mysqli_query($conn,"select * from ip where user_ipaddress ='$ipaddress'"); 
-if ($checkIp->num_rows>0) {  
-}
-
-else{
-$insertIp = mysqli_query($conn,"insert into ip(user_ipaddress) values ('$ipaddress')");
-if ($insertIp) {
 ?> 
- <script>
-$(document).ready(function() {
-$("#popup").show();
-});
-</script>
-<?php
-}
-
-}
- 
-} 
- ?> 
 <?php  session_start();
  require 'engine/configure.php';  
 if(isset($_POST["submit"]))   {  
 if(!empty($_POST["search"]))   {  
 $query = str_replace(" ", "+", mysqli_real_escape_string($conn,$_POST["search"]));
 header("location:search-process.php?search=" .htmlspecialchars($query)); 
- }  
-
- }  
-
- ?>  
-
-
-
-
-
-
-
-
-
-
-
-
+ }  }  ?>  
 
 
 <!DOCTYPE html>
@@ -88,6 +47,110 @@ font-family: poppins;
 
 
 
+#popup{
+background-color: rgba(248,248,248,0.3);  
+background-color: rgba(248,248,248,0.3);  
+position:fixed;
+top: 47%;
+left: 50%;
+transform: translate(-50%,-50%);
+width: 700px;
+padding:5px;
+z-index: 9999;
+box-shadow: 0 5px 30px rgba(0,0,0,.30);
+background: #fff;
+display:;
+transition: 0.3s;
+
+}
+
+
+
+#popup img{
+
+width: 100%;
+
+}
+
+
+#closePopup{
+color: white !important;
+font-size: 17px;
+position: absolute;
+top: 0px;
+left: 95%;
+border-radius:50%;
+background-color: rgba(0,0,0,0.8);
+padding:0px 8px;
+cursor: pointer;
+
+}
+
+
+#closePopup:hover, #closePopup:focus{
+opacity: 0.6;
+border: none;
+outline: none;
+box-shadow: none;
+}
+
+
+
+#sales{
+
+padding:4px 10px;
+
+position: relative;
+
+right: 0;
+
+bottom:0px;
+
+background-color: skyblue;
+
+color:white !important;
+
+font-family: poppins;
+
+font-weight: bold; 
+
+text-decoration: none;
+
+transition: 0.3s;
+
+}
+
+
+#buyitem{
+
+padding:4px 10px;
+
+position: relative;
+
+left: 0;
+
+bottom:0px;
+
+background-color: rgba(225,165,50,1);
+
+color:white !important;
+
+font-family: poppins;
+
+font-weight: bold;
+
+text-decoration: none;
+
+transition: 0.3s;
+
+}
+
+
+#buyitem:hover,#sales:hover{
+
+color:black !important;
+opacity: 0.7;
+}
 
 
 
@@ -382,6 +445,46 @@ z-index: 1;
 
 }
 
+
+
+
+.flickity-page-dots{
+
+ 
+  bottom: -35px;
+}
+
+
+ .flickity-page-dots .dot{
+
+  width:60px !important;
+  height: 4px;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  
+}
+
+@media only screen and (max-width:767px){
+
+
+ .flickity-page-dots .dot{
+
+  width:40px !important;
+  height: 4px;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  
+}
+
+
+}
+
+
+
+.flickity-page-dots .dot.is-selected{
+
+  background-color:rgba(255,165,50,1);
+}
 
 
 
@@ -2031,38 +2134,17 @@ transition: 0.3s ease-in-out;
 
 
 
-
-
-
-
 @media only screen and (max-width:767px){
-
-
 .nav_button{display: none;}
-
-
 }
-
-
 
 /*--------------------------------------------------------------
 # category
 --------------------------------------------------------------*/
 
 .category_row{
-
-  margin-top: 50px;
+margin-top: 50px;
 }
-
-
-
-
-
-
-
-
-
-
 
 
 </style>
@@ -2071,28 +2153,14 @@ transition: 0.3s ease-in-out;
 
 <header>
 
-
-
-
- 
 <div id="myform" class="overlay" id="overlay">
-
- <button class="btn close-btn" onclick="closeform()"><img src="assets/icons/filter_icon.png"></button> 
-
-
-  <div class="overlay-content">
-
- 
+<button class="btn close-btn" onclick="closeform()"><img src="assets/icons/filter_icon.png"></button> 
+<div class="overlay-content">
 <a href="discount-page.php" class="" >Discount deals</a>
-
 <a href="service-provider.php" class="" >Service providers<i class="fa fa-caret"></i> </a>
-
- <a href="gift-picks.php" class="" > &nbsp;gift picks&nbsp;&nbsp;</a>
-  
+<a href="gift-picks.php" class="" > &nbsp;gift picks&nbsp;&nbsp;</a>
 <a   href=" <?php if(!empty($_SESSION['id']) &&!empty($_SESSION['business_id']) &&!empty( $_SESSION["sp_id"])) {echo"postadvert.php";} else{echo"postadvert.php?step=postadvert";} ?>" class="" >&nbsp;Sell a product&nbsp;&nbsp;</a>
-
 <a href="customer-support.php" class="" >&nbsp;Customer support&nbsp;&nbsp;</a>
-
 </div>
 
 
@@ -2311,25 +2379,13 @@ transition: 0.3s ease-in-out;
 
 
 <a href="discount-page.php" class="nav_button" id="" >Discount deals</a>
-
 <a href="service-provider.php" class="nav_button" id="" >Service providers</a> 
-
 <a href="gift-picks.php" class="nav_button" id="" >gift picks</a>
-
-
 <a href="deals.php" class="nav_button" id="" >Deals</a>
-
-
 <a  href=" <?php if(isset($_SESSION['id']) || isset( $_SESSION["sp_id"]) || isset( $_SESSION["business_id"])){echo"postadvert.php";} else{echo"login.php?step=postadvert";} ?>" class="nav_button" id="" >Sell a product</a>
-
-
 <a href="customer-support.php" class="nav_button" id="" >Customer support</a>
-
-
 <div style="float: right;">
-
 <a href="cart.php" class="nav_button" id="nav_button" ><span class="numbering"></span><img src="assets/icons/mdi_cart-outline.png"></a>
-
 <a href="mylistings.php" class="nav_button" id="nav_button" ><img src="assets/icons/mdi_heart-outline.png"></a>
 
  <?php if(!empty($_SESSION['id']) || !empty($_SESSION['business_id']) || !empty( $_SESSION["sp_id"])) 
@@ -2350,19 +2406,11 @@ transition: 0.3s ease-in-out;
 </h1>
 
 
- <h3 id='head-h3' style="text-align: center;">Welcome to E-Stores: Bringing you the
+<h3 id='head-h3' style="text-align: center;">Welcome to E-Stores: Bringing you the
 best deals and services</h3><br>
-
-
 <h6 class='container' style="text-align: center;">
-
-
 <form method="post" id="formQ">
-
-
-  <input type="text" style="font-size:13px;" name="search" id="search"  placeholder="I'm looking for" class="search form-control"><button class="btn btn-info" name="submit"><i class="fa-solid fa-search"></i> search</button>
-
-
+<input type="text" style="font-size:13px;" name="search" id="search"  placeholder="I'm looking for" class="search form-control"><button class="btn btn-info" name="submit"><i class="fa-solid fa-search"></i> search</button>
 </form>
 
 
@@ -2427,15 +2475,9 @@ best deals and services</h3><br>
 
 
 <div class="container" id="category_row">
-
 <div class="row">
-
 <div class="col-md-4">
-
 <h6>Categories</h6><br>
-
-
-
 <input id="search_category"  type="search" class="form-control"  name="search_category" placeholder="Search category"><button id="category_button" class="btn btn-success">Search category</button>
 
 
@@ -2446,40 +2488,16 @@ best deals and services</h3><br>
 <?php
 
 require 'engine/configure.php';
-
 $query_category = mysqli_query($conn,"SELECT product_category, COUNT(*) AS count FROM item_detail GROUP BY product_category");
-
-while ($row = mysqli_fetch_array($query_category)) {
-  
-?>
-
-
+while ($row = mysqli_fetch_array($query_category)) { ?>
 <br> 
 <input type="checkbox" class="checkbox" id="<?php echo$row['product_category']?>" name="<?php echo$row['product_category']?>" value="<?php echo$row['product_category']?>">
-
-
 <label  for="categories" style="width: 90%;" id="categories"> <span id="words"><?php echo$row['product_category']?> </span>
-
 <span class="select_category" id="<?php echo$row['product_category']?>" name="<?php echo$row['product_category']?>" style="float: right;">
-
-  <img src="assets/icons/chevron_arrow_right.png">
-
-    <?php echo$row['count']?> 
-
-
-
-
+<img src="assets/icons/chevron_arrow_right.png">
+<?php echo$row['count']?> 
 </span></label> 
-
-
-<?php 
-
-
-}
-
-
-
-?>
+<?php } ?>
 
 
 
@@ -2511,8 +2529,29 @@ $('#search_category').on("keyup",function() {
   
 <div class="banner">
 
-<img id="img_coca" class="icons" src="assets/img/coca_cola.png">  
 
+<?php  
+require 'engine/configure.php';
+$featured = mysqli_query($conn,"SELECT * FROM item_detail where sold = 0 and featured = 1 order by id desc");
+if ($featured->num_rows>0) { ?>
+
+<h6><b style="color: white; background-color: rgba(0,70,90,0.8);padding: 5px;font-size:0.8rem;">Featured</b></h6><br>
+
+<div id="img_coca" class="assets_container featured container icons">
+<?php
+while ($getfeaturedProducts = mysqli_fetch_array($featured)) { ?>
+<div class="package" style="border:1px solid rgba(0,0,0,0.1);margin-right:25px;">
+<span style="padding:5px;" id="data_name"><?php echo$getfeaturedProducts['product_name']?></span><br>
+<span style="opacity: 0.5" id="data_price">From<br></span>
+<span style="opacity: 0.5" id="data_price"> <?php echo$getfeaturedProducts['product_price']?></span>
+<span style="opacity: 0.5" id="data_price"> <?php echo" $ ".round($getfeaturedProducts['product_price']/$dollar_rate)?></span><br>
+
+<a href="product-details.php?id=<?php echo$id ?>"><img style="height: 150px; width:200px;" src='<?php echo$getfeaturedProducts['product_image']?>' ></a><br>
+</div>
+  
+
+
+<?php } echo'</div>'; } else{echo'<img id="img_coca" class="icons" src="assets/img/coca_cola.png">';   }?>
 <figure>
 
 <a href="postadvert.php"><img id="add_icon" src="assets/icons/add_icon.png" class="add_icon icons"></a>
@@ -2533,15 +2572,9 @@ $('#search_category').on("keyup",function() {
 
 
 require 'engine/configure.php';
-
-
-
 $condition = "SELECT * from item_detail where sold = 0 order by id desc limit 6";
-
 $data = mysqli_query($conn,$condition);
-
 $datafound = $data->num_rows;
-
 echo "<table><tbody id='mytable' class=''>";
 
         while($row=mysqli_fetch_array($data))
@@ -2551,62 +2584,27 @@ echo "<table><tbody id='mytable' class=''>";
         <?php   
 
 echo "<div id='package'>";
-
-
-
-
 $price = $row['product_price'];
-
-
-
 $dollar = round(($price/$dollar_rate));
+if ($row['discount']>0) {
+echo "<span id='discount'>-".$row['discount']."%</span>";}
 
-      if ($row['discount']>0) {
-
- echo "<span id='discount'>-".$row['discount']."%</span>";}
-
-
-
-       if ($row['discount']==0) {
-
- echo "<span class='' id='noviews'>".$row['views']." <i class='fa fa-eye'></i></span>";
-
+if ($row['discount']==0) {
+echo "<span class='' id='noviews'>".$row['views']." <i class='fa fa-eye'></i></span>";
 }
-   
 echo "<a href='product-details.php?id=".urlencode($row['id'])."' target='_blank'><div style=''><img loading='lazy' id='imgitem'  src=".$row['product_image'].">"." "."</div></a>";
 
-
-
- 
-            if ($row['discount']>0) {
-
-
-       $price = $row['product_price'];
-
-  echo"<span style='text-decoration:line-through;' id='priceitem'>&#8358;".$price."</span> ";
-
-  echo"<span id='priceitem'>&#8358;".round(( $row['product_price'])-($row['discount']/100 * $price),2)."</span><br>";
-
-   echo"<span style='text-decoration:line-through;' id='priceitem'>$".round(($price/$dollar_rate),2)."</span>";
-
-   echo"<span id='priceitem'>$".round(($dollar)-($row['discount']/100 * $dollar))."</span><br>";
-
-
-
+if ($row['discount']>0) {
+$price = $row['product_price'];
+echo"<span style='text-decoration:line-through;' id='priceitem'>&#8358;".$price."</span> ";
+echo"<span id='priceitem'>&#8358;".round(( $row['product_price'])-($row['discount']/100 * $price),2)."</span><br>";
+echo"<span style='text-decoration:line-through;' id='priceitem'>$".round(($price/$dollar_rate),2)."</span>";
+echo"<span id='priceitem'>$".round(($dollar)-($row['discount']/100 * $dollar))."</span><br>";
 }
 
-
-
-       if ($row['discount']==0) {
-
-
-
- echo"<span id='priceitem'>&#8358;".$price."</span> ";
-
-
- echo" <span id='priceitem'>$".round($price/$dollar_rate)." </span><br>";
-
-
+if ($row['discount']==0) {
+echo"<span id='priceitem'>&#8358;".$price."</span> ";
+echo" <span id='priceitem'>$".round($price/$dollar_rate)." </span><br>";
 }
 
 
@@ -3215,9 +3213,6 @@ echo "<span id='nameitem' style='' ><a target='_blank' href='details-visitor.php
 <div class="col-md-4"><span>Here are some reported culprits consectetur. Ullamcorper bibendum diam sapien faucibus. Dolor in nibh malesuada ph.</span></div> 
 <div class="col-md-4"><img src="assets/img/offenders.png"></div> 
 
-
-
-
 </div>
 <br><br>
 
@@ -3230,9 +3225,6 @@ echo "<span id='nameitem' style='' ><a target='_blank' href='details-visitor.php
 <?php
 
 include 'footer.php';
-
-
-
 
 ?>
 
@@ -3360,6 +3352,22 @@ icon:"error",
 
 
 
+
+<script>
+  
+$('.featured').flickity({
+ cellAlign: 'left',
+contain: true,
+autoPlay:true,
+freeScroll: true,
+ friction:0.52,
+wrapAround: true,
+contain: true,
+prevNextButtons: false,
+
+});
+
+</script>
 
 </body>
 </html>

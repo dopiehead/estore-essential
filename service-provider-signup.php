@@ -429,6 +429,8 @@ font-size: 13px;
 
 <input type="hidden" value="0" name="verified">
 
+<input type="hidden" value="0" name="e_verify">
+
 <small style="font-size: 12px;">Upload photo</small><br>
 <label><i id="file-label" class="fa-solid fa-upload"></i><input type="file" class="form-control" name="imager"  id="imager" onchange="updateFileName(this)"></label><br>
 

@@ -225,6 +225,7 @@ border-radius:5px;
 #addx:hover,.addx:hover,#addx:focus,.addx:focus,{
 
   opacity: 0.6 !important;
+  background-color: rgba(0,0,0,0.4);
 }
 
 
@@ -237,14 +238,9 @@ border-radius:5px;
 #package{
 
 background-color:white;padding-bottom: 8px;margin-bottom:50px;border:1px solid rgba(0,70,90,0.2);
-
-
 width:200px;
-
-
-
 display: inline-block;
-margin:1em 2em;
+margin:1em 1em;
 
 }
 
@@ -682,7 +678,7 @@ font-size: 13px !important;
 
 position: relative;
 
-left:18%;
+left:16%;
 
 top:-38px;
 
@@ -1583,6 +1579,52 @@ console.log(errorThrown);
 })
 }
     });
+</script>
+
+
+<script type="text/javascript">
+$(document).on('click','.btn-subscribe',function(e){
+if (confirm("Do you want to add this item to featured product list?")) {
+ var pay = $('.btn-subscribe').attr('id');
+$.ajax({
+   type: "POST",
+   url: "product-pay.php",
+   data: 'id='+pay,
+  success: function(data) {
+   if (data==1) {
+  window.location="payment.php"; 
+}
+else{
+
+ swal({
+
+text:response,
+icon:"error"
+
+
+ });
+
+}
+           
+
+           
+
+            },
+
+            error: function(jqXHR, textStatus, errorThrown) {
+
+                console.log(errorThrown);
+
+            }
+
+        })
+}
+    });
+
+
+
+
+
 </script>
 
 

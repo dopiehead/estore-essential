@@ -399,9 +399,9 @@ font-size: 13px !important;
 
 position: relative;
 
-left:17%;
+left:16%;
 
-top:-40px;
+top:-36px;
 
 font-size: 13px !important;
 
@@ -696,15 +696,14 @@ transition: 0.3s;
 
 .bell{
 
-  margin-left: 20px;
+  margin-left: 45px;
 
   position: relative;
 
-  top: -40px;
+  top: -53px;
 
 
 }
-
 
 
 
@@ -935,11 +934,21 @@ if ($getsales) {
    
     <tr>
 
-   <td><?php echo$row['id']?></td>
+      <?php 
+
+      $id = $row['id'];
+
+      $key = "987654";
+
+      $encrypted = $id * $key;
+
+       ?>
+
+   <td><?php echo$encrypted ?></td>
 
       <td><?php echo$row['product_name']?></td>
  
-      <td><?php echo$row['date_posted']?></td>
+      <td><?php echo$row['date']?></td>
 
   
 

@@ -14,7 +14,7 @@ $id = $_GET['id'];
 ?>
 
 <?php
-	require 'engine/configure.php';
+require 'engine/configure.php';
 if (isset($_GET['user_type']) && !empty($_GET['user_type'])) {
 $user_type = $_GET['user_type'];
 if ($user_type=='buyer') {
@@ -32,7 +32,7 @@ $verified=$row['verified'];
 
  ?>
 
-<h6  style="font-family: trirong"><b>Buyers</b></h6>
+<h6 style="font-family: trirong"><b>Buyers</b></h6>
 <input type="hidden" name="id" value="<?php echo$id ?>" class="form-control"><br>
 <label>Name</label> <br>
 <input type="text" name="name"  value=" <?php echo$name ?>" class="form-control"><br>
@@ -42,10 +42,13 @@ $verified=$row['verified'];
 <input type="text" name="phone" value=" <?php echo$phone ?>" class="form-control"><br>
 <label>Verified</label> <br>
 <select name="verified" class="form-control">
-     
-     <option value="1">Verify</option>
-	<option value="0">Remove verify</option>
-
+ <?php if ($verified){    ?>  
+ <option value="0">Remove verify</option>
+ <option value="1">Verify</option> 
+  <?php } else{ ?>
+ <option value="1">Verify</option> 
+ <option value="0">Remove verify</option>
+  <?php } ?>
 </select><br>
 <input type="button" name="submit" value="Update" class="btn btn-warning form-control">
 
@@ -66,7 +69,6 @@ if (!empty($name.$email.$phone.$verified)) {
 }
 
 else{
-
 $update = mysqli_query($conn,"UPDATE user_profile SET user_name='".htmlspecialchars($name)."',user_email='".htmlspecialchars($email)."',user_phone='".htmlspecialchars($phone)."',verified='".htmlspecialchars($verified)."' WHERE id='".htmlspecialchars($id)."'");
 if ($update) {
 	
@@ -78,8 +80,7 @@ if ($update) {
  }  }  ?>
 
 <?php 
-	require 'engine/configure.php';
-
+require 'engine/configure.php';
 if (isset($_GET['id'])) {
 $id = $_GET['id'];
 }
@@ -117,8 +118,13 @@ $business_verified=$row['verified'];
 <textarea name="company_description" placeholder="<?php echo$company_description ?>" value=" <?php echo$company_description ?>" class="form-control"></textarea><br>
 <label>Verification</label> <br>
 <select name="verified" class="form-control">
-     <option value="1">Verify</option>
-	 <option value="0">Remove verify</option>
+<?php if($business_verified>0){      ?>
+<option value="0">Remove verify</option>	
+<option value="1">Verify</option>
+<?php  } else{  ?>
+<option value="1">Verify</option>
+ <option value="0">Remove verify</option>
+<?php  }  ?>
 </select><br>
 <input type="button" name="submit" value="Update" class="btn btn-warning form-control">
 
@@ -126,7 +132,6 @@ $business_verified=$row['verified'];
 <?php  
 
 if (isset($_POST['submit'])){
-
 $business_id =$_POST['id'];   
 $business_name =$_POST['business_name'];
 $business_email=$_POST['business_email'];
@@ -179,7 +184,7 @@ $sp_phonenumber1=$row['sp_phonenumber2'];
 $sp_pricing=$row['pricing'];
 $sp_date=$row['date'];
 $sp_verified=$row['sp_verified'];
-
+$e_verified=$row['e-verify'];
 }
      } ?>
 
@@ -203,21 +208,50 @@ $sp_verified=$row['sp_verified'];
 <input type="number"  min="0" maxlength="3"  name="sp_pricing" value="<?php echo$sp_pricing ?>" class="form-control"><br>
 <label>Date</label> <br>
 <input type="text" readonly="" name="sp_date" value=" <?php echo$sp_date ?>" class="form-control"><br>
+
+
+<!-------------------------------------------------------Verify User---------------------------------------------------------->
+
 <label>Verified</label> <br>
 <select name="sp_verified" class="form-control">
-     
-     <option value="1">Verify</option>
-	<option value="0">Remove verify</option>
+<?php if ($sp_verified>0) { ?>
+<option value="0">Remove verify</option>
+<option value="1">Verify User</option>
+<?php } else { ?>
+<option value="1">Verify User</option>
+<option value="0">Remove verify</option>
+<?php } ?>
+</select><br>
 
+
+
+
+
+
+
+<!-------------------------------------------------------E-Verify User---------------------------------------------------------->
+
+
+
+<label>E-verify</label> <br>
+<select name="e-verify" class="form-control">
+<?php if($e_verified>0){ ?>
+<option value="0">Remove verify</option>
+ <option value="1">Verify user</option>
+<?php }
+else{ ?>
+<option value="1">Verify User</option>
+<option value="0">Remove verify</option>
+<?php } ?>
 </select><br>
 <input type="button" name="submit" value="Update" class="btn btn-warning form-control">
+
 
 
 <?php 
 
 
 if (isset($_POST['submit'])){
-
 $sp_id =$_POST['sp_id'];           
 $sp_name =$_POST['sp_name'];
 $sp_email=$_POST['sp_email'];
@@ -229,33 +263,25 @@ $sp_phonenumber1=$_POST['sp_phonenumber2'];
 $sp_pricing=$_POST['pricing'];
 $sp_date=$_POST['date'];
 $sp_verified=$_POST['sp_verified'];
+$e_verified=$_POST['e-verify'];
 
 if (!empty($sp_name.$sp_email.$sp_location.$sp_bio.$sp_phonenumber.$sp_phonenumber1.$sp_pricing.$sp_verified)) {
-	
-	echo "All fields are required";
+echo "All fields are required";
 }
 
 elseif (strlen($sp_name)>30) {
-
-	echo "item limit exceeded";
-	
+echo "item limit exceeded";
 }
 
 else{
-
-$update = mysqli_query($conn,"UPDATE service_providers SET sp_name='".htmlspecialchars($sp_name)."',sp_email='".htmlspecialchars($sp_email)."',sp_experience='".htmlspecialchars($sp_experience)."',sp_location='".htmlspecialchars($sp_location)."',sp_bio='".htmlspecialchars($sp_bio)."',sp_phonenumber1='".htmlspecialchars($sp_phonenumber)."',sp_phonenumber2='".htmlspecialchars($sp_phonenumber1)."',pricing='".htmlspecialchars($sp_pricing)."',sp_verified='".htmlspecialchars($sp_verified)."' WHERE sp_id='".htmlspecialchars($sp_id)."'");
+$update = mysqli_query($conn,"UPDATE service_providers SET sp_name='".htmlspecialchars($sp_name)."',sp_email='".htmlspecialchars($sp_email)."',sp_experience='".htmlspecialchars($sp_experience)."',sp_location='".htmlspecialchars($sp_location)."',sp_bio='".htmlspecialchars($sp_bio)."',sp_phonenumber1='".htmlspecialchars($sp_phonenumber)."',sp_phonenumber2='".htmlspecialchars($sp_phonenumber1)."',pricing='".htmlspecialchars($sp_pricing)."',sp_verified='".htmlspecialchars($sp_verified)."',e-verify='".htmlspecialchars($e_verified)."' WHERE sp_id='".htmlspecialchars($sp_id)."'");
 if ($update) {
-	
-	echo "Detail edit successful";
+echo "Detail edit successful";
 }
 } 
 }
 
 }  } ?>
-
-
-
-
 
 </div>
 

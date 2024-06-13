@@ -15,6 +15,7 @@ echo'<table class="table-responsive table-striped table-hovered ">
 <th>email</th>
 <th>address</th>
 <th>verified</th>
+<th>e-verified</th>
 <th>speciality</th>
 <th>experience</th>
 <th>bio</th>
@@ -51,6 +52,7 @@ while ($row=mysqli_fetch_array($query)) { $id = $row['sp_id']; ?>
 <td><?php echo$row["sp_email"]?></td>
 <td><?php echo$row["sp_location"]?></td>
 <td><?php if($row["sp_verified"]>0){echo "Verified";}else{echo "Not verified";} ?></td>
+<td><?php if($row["e-verify"]>0){echo "Verified";}else{echo "Not verified";} ?></td>
 <td><?php echo$row["sp_speciality"]?></td>
 <td><?php echo$row["sp_experience"]?></td>
 <td><?php echo$row["sp_bio"]?></td>

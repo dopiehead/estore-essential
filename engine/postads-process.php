@@ -1,5 +1,6 @@
 <?php
 require 'configure.php';
+
 error_reporting(E_ALL ^ E_NOTICE);
 
 $product_name=mysqli_escape_string($conn,$_POST['product_name']);
@@ -33,6 +34,8 @@ $views=mysqli_real_escape_string($conn,$_POST['views']);
 $deals=mysqli_real_escape_string($conn,$_POST['deals']);
 
 $likes=mysqli_real_escape_string($conn,$_POST['likes']);
+
+$featured=mysqli_real_escape_string($conn,$_POST['featured']);
 
 $date=date("D, F d, Y g:iA");
 
@@ -100,7 +103,7 @@ if ($we->num_rows==1) { echo"You cannot post the same content twice";
 
 else {
 
-   $a="insert into item_detail (user_id,product_name,product_category,product_color,product_location,product_address,product_price,price_denomination,product_image,phone_number,product_details,discount,gift_picks,sold,likes,views,deals,date) values('".htmlspecialchars($userid)."','".htmlspecialchars($product_name)."','".htmlspecialchars($product_category)."','".htmlspecialchars($product_color)."','".htmlspecialchars($product_location)."','".htmlspecialchars($product_address)."','".htmlspecialchars($product_price)."','".htmlspecialchars($price_denomination)."','".htmlspecialchars($imagePath)."','".htmlspecialchars($phone_number)."','".htmlspecialchars($product_details)."','".htmlspecialchars($discount)."','".htmlspecialchars($gift_picks)."','".htmlspecialchars($sold)."','".htmlspecialchars($likes)."','".htmlspecialchars($views)."','".htmlspecialchars($deals)."','".htmlspecialchars($date)."')";
+   $a="insert into item_detail (user_id,product_name,product_category,product_color,product_location,product_address,product_price,price_denomination,product_image,phone_number,product_details,discount,gift_picks,sold,likes,views,deals,date) values('".htmlspecialchars($userid)."','".htmlspecialchars($product_name)."','".htmlspecialchars($product_category)."','".htmlspecialchars($product_color)."','".htmlspecialchars($product_location)."','".htmlspecialchars($product_address)."','".htmlspecialchars($product_price)."','".htmlspecialchars($price_denomination)."','".htmlspecialchars($imagePath)."','".htmlspecialchars($phone_number)."','".htmlspecialchars($product_details)."','".htmlspecialchars($discount)."','".htmlspecialchars($gift_picks)."','".htmlspecialchars($sold)."','".htmlspecialchars($likes)."','".htmlspecialchars($views)."','".htmlspecialchars($deals)."','".htmlspecialchars($featured)."','".htmlspecialchars($date)."')";
 
    $r = mysqli_query($conn,$a);
 
@@ -115,12 +118,6 @@ else{
 }
 
 }
-
-
-
-
-
-
 
 }
 

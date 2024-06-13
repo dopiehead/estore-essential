@@ -46,23 +46,6 @@ header("location:search-process.php?search=" .htmlspecialchars($query));
  ?>  
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -89,7 +72,7 @@ body{
 
 .main .flickity-page-dots .dot{
 
-  width:20px;
+  width:15px;
   height: 4px;
   margin: 0;
   border-radius: 0;
@@ -100,6 +83,166 @@ h1 img{
 
   margin-left: 10px;
 }
+
+
+
+.flickity-page-dots{
+bottom: -35px;
+}
+
+
+ .flickity-page-dots .dot{
+
+  width:20px !important;
+  height: 6px;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  
+}
+
+@media only screen and (max-width:767px){
+
+
+ .flickity-page-dots .dot{
+
+  width:15px !important;
+  height: 4px;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  
+}
+
+
+}
+
+
+
+.flickity-page-dots .dot.is-selected{
+
+  background-color:rgba(255,165,50,1);
+}
+
+
+
+
+
+
+#data_price,#data_name{
+
+  padding-left: 20px;
+  font-size: 13px;
+  text-transform: capitalize;
+}
+
+
+
+#assets_container .package  img{
+
+
+width: 210px !important;
+height: 180px !important;
+float: right;
+
+}
+
+
+@media only screen and (max-width:497px){
+
+
+
+
+#assets_container .package  img{
+
+
+width: 100%;
+
+height: 80px;
+
+
+}
+
+
+#assets_container .package{
+
+
+display: inline-block;
+
+margin-right: 20px !important;
+
+border:1px solid rgba(0,70,90,0.1);
+
+padding: 1px;
+
+width:215px !important;
+
+
+}
+
+
+
+
+
+
+}
+
+
+@media only screen and (min-width:498px) and (max-width:767px){
+
+#assets_container .package  img{
+
+
+width: 17em;
+
+height: 80px;
+
+}
+
+
+#assets_container .package{
+
+
+display: inline-block;
+
+margin-right: 20px;
+
+border:1px solid rgba(0,70,90,0.1);
+
+padding: 1px;
+
+
+}
+
+}
+
+
+
+#assets_container .package{
+
+
+display: inline-block;
+
+margin-right: 20px;
+
+border:1px solid rgba(0,70,90,0.1);
+
+padding: 1px;
+
+width:100%;
+
+}
+
+
+#assets_container {
+
+font-size: 10px;
+
+width: 100%;
+
+margin-top: 30px;
+
+}
+
+
 
 
 
@@ -120,7 +263,7 @@ margin-left: 30px !important;
 
 
 .open-btn{
-  margin-top: -3px !important;
+
 }
 
 #noviews{
@@ -266,7 +409,7 @@ margin:1em 1em;
 
 background-color:rgba(243,243,243,0.1);padding-bottom: 8px;margin-bottom:50px;border:1px solid rgba(0,70,90,0.2);
 padding: 0px;
-width:195px;
+width:200px;
 display: inline-block;
 margin:1em 1em;
 
@@ -433,7 +576,7 @@ color: white;
 
 #main  .flickity-page-dots .dot{
 
-  width:20px;
+  width:10px;
   height: 4px;
   margin: 0;
   border-radius: 0;
@@ -529,31 +672,15 @@ color: white !important;
 
 .category{
 
-
-
-	margin-right:5px;
-
-	font-size: 12px;
-
-	border:1px solid rgba(0,0,0,0.2);
-
-	padding: 2px 10px;
-
-	border-radius: 15px;
-
-	text-transform: capitalize;
-
-	color: black;
-
-	text-decoration: none;
-
-
+margin-right:5px;
+font-size: 12px;
+border:1px solid rgba(0,0,0,0.2);
+padding: 2px 10px;
+border-radius: 15px;
+text-transform: capitalize;
+color: black;
+text-decoration: none;
 }
-
-
-
-
-
 }
 
 
@@ -562,13 +689,9 @@ color: white !important;
 
 .category:hover{
 
-	
 background-color: skyblue;
-
 color:white;
-
 text-decoration: none;
-
 transition: 0.3s ease-in-out;
 
 }
@@ -587,11 +710,10 @@ transition: 0.3s ease-in-out;
 
 .footer h6{
 
-  font-weight: bold;
+font-weight: bold;
+font-size: 16px;
+margin-bottom: 10px;
 
-  font-size: 16px;
-
-  margin-bottom: 10px;
 }
 
 
@@ -602,9 +724,10 @@ transition: 0.3s ease-in-out;
 
 
 .footer{
-  padding: 10px 20px;
 
-  background-color: rgba(192,192,192,0.5);
+padding: 10px 20px;
+background-color: rgba(192,192,192,0.5);
+
 }
 
 
@@ -617,13 +740,9 @@ width: 140px;
 .footer button{
 
   font-size: 13px;
-
   border:1px solid transparent;
-
   background-color: rgba(0,0,0,0.6);
-
   color: white;
-
   margin-bottom: 8px;
 
 
@@ -635,10 +754,6 @@ width: 140px;
 }
 
 
-
-
-
-
 @media only screen and (max-width:1200px){
 
 .button_navigation{
@@ -646,11 +761,6 @@ width: 140px;
 display: none;
 
 }
-
-
-
-
-
 }
 
 
@@ -671,42 +781,43 @@ display: none;
 
 <br><br>
 	<div class="nav-container container">
-
 <a class="category" href=""><?php echo $page ?></a><a class="category" href=""><?php echo$product_location?> / <?php if(!empty($product_name)) {echo$product_name;} ?></a><a class="category" style="color: skyblue;display: none;" href="checkout-page?id=$product_id">Check out</a>
-
-
 </div>
-<br>
-
+<br><br>
 <div class="container">
 
+<?php
+require 'engine/configure.php';
+$featured = mysqli_query($conn,"SELECT * FROM item_detail where sold = 0 and featured = 1 order by id desc");
+if ($featured->num_rows>0) { ?>
+<h6><b style="color: white; background-color: rgba(0,70,90,0.8);padding: 5px;">Featured</b></h6><br>
+<div class="assets_container featured container">
+<?php
+while ($getfeaturedProducts = mysqli_fetch_array($featured)) { ?>
+<div class="package" style="border:1px solid rgba(0,0,0,0.1);margin-right:25px;">
+<span style="padding:5px;" id="data_name"><?php echo$getfeaturedProducts['product_name']?></span><br>
+<span style="opacity: 0.5" id="data_price">From<br></span>
+<span style="opacity: 0.5" id="data_price"> <?php echo$getfeaturedProducts['product_price']?></span>
+<span style="opacity: 0.5" id="data_price"> <?php echo" $ ".round($getfeaturedProducts['product_price']/$dollar_rate)?></span><br>
+
+<a href="product-details.php?id=<?php echo$id ?>"><img style="height: 150px; width:200px;" src='<?php echo$getfeaturedProducts['product_image']?>' ></a><br>
+</div>
+<?php } echo'</div>'; } else{   ?>
 <div class="row">
-
 <div id="coca_cola" class="col-md-6">
-
-	<img src="assets/img/coca_cola.png">
-
+<img src="assets/img/coca_cola.png">
 </div>
-
-
 <div id="coca_cola" class="col-md-6">
-
-	<img src="assets/img/coca_cola.png">
-
-
+<img src="assets/img/coca_cola.png">
 </div>
-
+<br>
 </div>
-
+<?php    }     ?>
 <br>
 
 
 <div class="discount_main">
-
-
-	<p><?php echo$page ?></p>
-
-
+<p><?php echo$page ?></p>
 </div>
 
 <br>
@@ -1183,6 +1294,35 @@ function closeform() {
 }
 
 </script>
+
+
+
+
+<script>
+  
+$('.featured').flickity({
+ cellAlign: 'left',
+contain: true,
+autoPlay:true,
+freeScroll: true,
+ friction:0.52,
+wrapAround: true,
+contain: true,
+prevNextButtons: false,
+
+});
+
+</script>
+
+
+
+
+
+
+
+
+
+
 
 <!------------------------------------------btn-scroll--------------------------------------------------->
 

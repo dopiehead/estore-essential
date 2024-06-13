@@ -1,9 +1,27 @@
 
-<?php session_start(); ?>
+<?php session_start(); ?><?php
+
+if (!isset($_SESSION['admin_id'])) { ?>
+  
+<script>
+
+alert("You are not admin");
+
+setTimeout(function() {
+
+window.location.href ='login.php';
+  
+},2500);
+
+</script>
+
+<?php } ?>
+
+
 <!DOCTYPE html>
 <html>
 <head>
-  
+
 <title>E-stores | admin</title>
   <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
 
@@ -30,10 +48,25 @@ h1 img{
 }
 
 
+#btn-changepassword{
+
+  background-color: rgba(255,165,50,1);
+}
+
+
+
+
+.nav_signup,.nav_login{
+
+opacity: 0;
+display: none;
+
+}
+
 
 table tbody tr td{
 
-font-size: 0.7rem;
+font-size: 0.8rem;
 
 text-transform: capitalize;
 
@@ -60,7 +93,7 @@ height: 80px;
 
 table tbody tr td a{
 
-font-size: 0.6rem !important;
+font-size: 0.8rem !important;
 
 
 
@@ -118,7 +151,7 @@ margin-left: 210px !important;
 
 @media only screen and (max-width:797px){
 #think{
-margin-left: 30px !important;
+margin-left: 120px !important;
 
 }
 }
@@ -180,6 +213,83 @@ color: white !important;
   opacity: 0;
 }
 
+#popup-password{
+background-color: rgba(248,248,248,0.3);  
+background-color: rgba(248,248,248,0.3);  
+position:fixed;
+top: 50%;
+left: 50%;
+transform: translate(-50%,-50%);
+width: 400px;
+padding:5px;
+z-index: 99;
+box-shadow: 0 5px 30px rgba(0,0,0,.30);
+background: #fff;
+visibility:hidden;
+opacity:0;
+transition: 0.3s;
+
+}
+
+
+
+#popup-dollar{
+background-color: rgba(248,248,248,0.3);  
+background-color: rgba(248,248,248,0.3);  
+position:fixed;
+top: 50%;
+left: 50%;
+transform: translate(-50%,-50%);
+width: 400px;
+padding:5px;
+z-index: 99;
+box-shadow: 0 5px 30px rgba(0,0,0,.30);
+background: #fff;
+visibility:hidden;
+opacity:0;
+transition: 0.3s;
+
+}
+
+
+
+
+
+
+
+#popup-password.active,#popup-dollar.active,#popupAccount.active{
+  
+visibility: visible;
+opacity: 1;
+transition: 0.3s;
+
+    }
+
+#close-password,.close-password,#close-dollar{
+float: right;
+background-color: black;
+color: white;
+padding:0px 7px;
+border-radius: 50%;
+cursor: pointer;
+
+
+}
+
+
+#popup-password h6{
+  
+font-weight: bold;
+font-size: 0.8rem;
+color: #17a2b8;
+
+    }
+
+
+
+
+
+
 
 
 
@@ -197,6 +307,16 @@ ul li{
   font-size: 0.8rem;
 
   font-weight: bold;
+}
+
+
+
+
+ul li{
+
+cursor: pointer;
+
+
 }
 
 .active{
@@ -306,7 +426,7 @@ font-size:13px;
 
 .nav_signup{
 
-opacity: 0;
+
 border:1px solid none;
 border-left:1px solid white;
 border-left-color: rgba(192,192,192,1);
@@ -474,7 +594,7 @@ font-size: 13px;
 
 .nav_login{
 
-opacity: 0;
+
 
 margin-left:80px;
 font-weight: normal !important;
@@ -767,6 +887,46 @@ display: none;
 
 <div style="padding: 20px;">
 
+<div class="row">
+
+<div class="col-md-2">
+
+<div id="main">
+
+<h6>Welcome Admin</h6>
+
+</div>
+
+<br><br>
+
+<ul>
+   <li><a style="color: black;opacity: 0.9;" href="admin.php"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+<li><a onclick="dollar()"><i class="fa fa-money"></i> Dollar rate ($)</a></li>
+<li class="link-active"><a style="color: black;opacity: 0.9;" href="admin-notify.php"><i class="fa fa-envelope"></i> Messages</a></li>
+   <li>    
+<a style="cursor: pointer;" onclick="settings()"><i  class="fa fa-gear"></i> Settings &gt;</a>
+<ul id="subsettings" class="active">
+<li><a onclick="togglepassword()">Change Password</a></li>
+<li><a style="text-decoration:none;color:black;opacity: 0.7;" href="logout.php"><i class="fa fa-sign-out"></i> Logout</a></li>
+</ul>    
+</li>
+
+</ul>
+
+
+<br>
+
+</div>
+
+<div class="col-md-10">
+
+
+
+
+
+
+<div style="padding: 20px;">
+
 
 
 
@@ -803,7 +963,12 @@ $date =   mysqli_escape_string($conn,$row['date']);
 
 <p><?php echo$row['compose']; ?></p>
 
+
+<p><a class="btn btn-warning" href="mailto:<?php echo$email ?>">Reply</a> <i class="fa fa-chevron-right"></i> </p>
+
 <span id="time"><?php echo$row['date']; ?></span><br>
+
+
 
 
 </div>
@@ -817,7 +982,7 @@ $date =   mysqli_escape_string($conn,$row['date']);
 
 else{
 
-echo"<br><br><br><br><br><br>There are no messages in your inbox<br><br><br><br>";
+echo"<div style='margin:50px 10px;text-align:center;opacity:0.7;'>There are no messages in your inbox</div>";
 
 }
 
@@ -845,16 +1010,381 @@ echo"<br><br><br><br><br><br>There are no messages in your inbox<br><br><br><br>
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+</div>
+</div>
+
+
+<div id="popup-password">
+<a onclick="togglepassword()" id="close-password">&times;</a>
+<h6 align="center" id="h6">Change Password</h6>
+<hr>
+<div class="container">
+
+<?php
+
+
+require 'engine/configure.php';
+ $sql="select * from admin where admin_id='".htmlspecialchars($_SESSION['admin_id'])."'";
+   $dbc=mysqli_query($conn,$sql);
+  while ($row=mysqli_fetch_array($dbc)) {
+   $myid=$row['admin_id'];
+    $mypassword=$row['admin_password'];
+    
+    
+  
+  }
+    
+ ?>
+
+  <form method="POST" id="changepassword" enctype="multipart/form-data" >
+  <input type="hidden" name="id" value="<?php echo$_SESSION['admin_id']?>">
+  <input style="font-size:14px;" type="password" name="opassword" id="opassword" class="form-control" value="" placeholder="Enter old password"><br>
+  <input style="font-size:0.8rem;" type="password" name="password" id="password" class="form-control" value="" placeholder="Enter new password"><br>
+  <input style="font-size:0.8rem;" type="password" name="cpassword" id="cpassword" class="form-control" value="" placeholder="Confirm password" >
+  <label style="font-size:0.8rem;">User name: <b>Admin</b></label> 
+  <input type="submit" name="submit" id="btn-changepassword" value="Update password" class="btn btn-changepassword form-control" style="color: white;font-size:0.7rem !important;"><br>
+<div align="center" style="display: none;" id="loading-image"><img id="loader" height="50" width="50" src="loading-image.GIF"></div>
+</form>
+</div>
+ <br> 
+
+</div>
+
+<!------------------------------------Dollar rate---------------------------------->
+
+<div id="popup-dollar">
+<a onclick="dollar()" id="close-dollar">&times;</a>
+<h6 align="center" id="h6"><b style="color:skyblue;">Enter dollar rate</b></h6>
+<hr>
+<div class="container">
+<form id="form-dollar">
+<input type="text" name="dollar_rate" id="dollar_rate" style="border:1px solid transparent;box-shadow : 0px 0px 5px rgba(0,0,0,0.3);" class="form-control" placeholder="$ Enter dollar rate"><br>
+<button class="btn btn-warning form-control">Update</button>
+<div align="center" style="display: none;" id="loading-image"><img id="loader" height="50" width="50" src="loading-image.GIF"></div>
+</form>
+</div>
+
+
+ <br> 
+
+</div>
+
+
+
 <!------------------------------------------footer--------------------------------------------------->
 
 
 <?php
-
 include 'footer.php';
-
-
 ?>
 
+
+
+<script type="text/javascript">
+function togglepassword() {
+var popup = document.getElementById('popup-password');
+popup.classList.toggle('active');
+}
+
+</script>
+
+
+
+<script type="text/javascript">
+function dollar() {
+var popup = document.getElementById('popup-dollar');
+popup.classList.toggle('active');
+
+}
+
+</script>
+
+
+
+
+<script type="text/javascript">
+var postData = "text";
+$('.btn-warning').on('click',function(e){
+var dollar_rate = $("#dollar_rate").val();
+e.preventDefault();
+$("#loading-image").show();
+$.ajax({
+ type: "POST",
+url: "engine/add-dollar.php",
+data:  $("#form-dollar").serialize(),
+cache:false,
+contentType: "application/x-www-form-urlencoded",
+success: function(response) {
+$("#loading-image").hide();
+if (response==1) {
+swal({
+text:"Dollar rate has been modified",
+icon:"success",
+});
+$("#popup-dollar").hide(1000);
+}
+else{
+swal({
+icon:"error",
+text:response
+ });
+$("#form-dollar")[0].reset();
+
+}
+ },
+error: function(jqXHR, textStatus, errorThrown) {
+ console.log(errorThrown);
+}
+
+        });
+
+    });
+
+</script>
+
+
+
+<script type="text/javascript">
+var postData = "text";
+$('#btn-changepassword').on('click',function(e){
+var password = $("#password").val();
+e.preventDefault();
+$("#loading-image").show();
+$.ajax({
+type: "POST",
+url: "engine/edit-password.php",
+data:  $("#changepassword").serialize(),
+cache:false,
+contentType: "application/x-www-form-urlencoded",
+success: function(response) {
+$("#loading-image").hide();
+if (response==1) {
+swal({
+ text:"Password has been modified",
+  icon:"success",
+});
+$("#popup-password").hide(1000);             
+}
+else{
+ swal({
+
+ title:"Oops!!", 
+icon:"error",
+text:response
+});
+ $("#form-signup").find('input:text').val('');
+$("#form-signup").find('input:password').val('');
+$("#form-signup").find('input:email').val('');
+$('input:checkbox').removeAttr('checked');
+ }
+ },
+error: function(jqXHR, textStatus, errorThrown) {
+console.log(errorThrown);
+
+            }
+
+        })
+
+    });
+
+
+
+
+
+</script>
+
+
+<script type="text/javascript">
+
+$("#loading-image").hide();
+$("#q").on('keyup',function() {
+var x = $('#q').val();
+var user_type = $('#user_type').val();
+if (x=='') {$("#reset").hide();}
+else{
+$("#reset").show();
+}
+getData(user_type,x);
+});
+
+$('#user_type').on('change',function(e) {
+var user_type = $('#user_type').val();
+if (user_type !='all') {
+getData(user_type);
+}
+});
+
+$(document).on('click','.btn-success',function(e) {
+e.preventDefault();
+var page = $(this).attr('id');
+var user_type = $('#user_type').val();
+var x = $('#q').val();
+if (page!='') {
+$('.btn-success').removeClass('active-button');
+$(this).addClass('active-button');
+}
+
+getData(user_type,x,page);
+  
+});
+
+function getData(user_type,x,page) {
+$.ajax({
+url:"admin-engine.php",
+type:"POST",
+data:{'user_type':user_type,'q':x,'page':page},
+success:function(data) {
+$("#loading-image").hide();
+$("#table").html(data).show();
+
+  }
+
+
+});
+
+
+};
+
+
+
+</script>
+
+
+
+<script>
+  
+$('#user_type').trigger('change');
+
+</script>
+
+
+<script>
+$(document).ready(function(){
+    $(document).on('click','.btn-danger',function(e){
+        if(!confirm('Are you sure you want to delete this message?')){
+            e.preventDefault();
+            return false;
+        }
+        return true;
+    });
+});
+
+</script>
+
+
+<script>
+
+$(document).on('click','.check_all',function() {
+
+ var isChecked = $(this).prop('checked');
+
+ $('.checkbox').prop('checked', isChecked);
+
+ if (isChecked) {
+
+ $('.delete_all').css("opacity","1");
+
+}
+
+else{
+
+ $('.delete_all').css("opacity","0");
+
+
+}
+ 
+});
+
+
+</script>
+
+
+
+
+<!------------------------------------------btn-scroll--------------------------------------------------->
+
+<a class="btn-down" onclick="topFunction()">&#8593;</a>
+
+<script src="assets/js/scroll.js"></script>
+
+<script src="assets/js/overlay.js"></script>
+
+<script>
+  
+function settings() {
+ 
+$("#subsettings").toggleClass("active");
+
+}
+
+</script>
+
+
+
+
+<script type="text/javascript">
+var postData = "text";
+$(document).on('click','.delete_all',function(e){
+  if(!confirm('Are you sure you want to delete this message?')){
+            e.preventDefault();
+            return false;
+       
+var user_type = $("#user_type").val();
+var id = $(".check").val();
+e.preventDefault();
+$("#loading-image").show();
+$.ajax({
+ type: "POST",
+url: "engine/delete-all.php",
+data:{'id':id,'user_type':user_type},
+cache:false,
+contentType: "application/x-www-form-urlencoded",
+success: function(response) {
+$("#loading-image").hide();
+if (response==1) {
+swal({
+text:"These members have been deleted successfully",
+icon:"success",
+});
+
+}
+else{
+swal({
+icon:"error",
+text:response
+ });
+
+
+
+}
+ },
+error: function(jqXHR, textStatus, errorThrown) {
+ console.log(errorThrown);
+}
+
+        });
+
+ }
+
+    });
+
+</script>
 
 
 

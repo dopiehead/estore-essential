@@ -703,55 +703,31 @@ transition: 0.3s;
   <div id="overlay" class="col-md-3">
 
 <div class="overlay-content">
-
- 
-
 <a href="index.php" class="button_home" ><img src="assets/icons/Vector.png"> Home<span id="date"><?php echo date("F d, Y");?></span></a><br>
-
- 
 <a href="dashboard.php" class="button_dashboard"><img src="assets/icons/round-dashboard.png"> Dashboard</a><br>
-
 <a id="active" href=""><img src="assets/icons/healthicons_person.png"> Post product<i class="fa fa-caret"></i> </a><br>
-
- <a href="mylistings.php"><img src="assets/icons/material-symbols_box-add-outline.png"> My listing</a><br>
-    
-
+<a href="mylistings.php"><img src="assets/icons/material-symbols_box-add-outline.png"> My listing</a><br>
 <a href="profile.php"><img src="assets/icons/icon-park-outline_add-pic.png"> Profile</a><br>
-
-
 <a href="messages.php">Messages</a><br>
-
-
 <?php if (!empty($_SESSION["sp_id"])) {
 
 ?>
 <a href="services-provided.php">Service Provided</a><br>
-
 <?php
-
 $sp_id = $_SESSION['sp_id'];
 
  }
 
  else{
- 
  echo'<a href="sold-history.php">Sold History</a><br>';
 
  }
 
 ?>
-
-
-
-
-
 <hr>
 
 <br>
-
-
 <a href="logout.php" class="button_logout"><img src="assets/icons/icon-park_logout.png"> Logout</a><br>
-
 </div>
 
 
@@ -760,16 +736,11 @@ $sp_id = $_SESSION['sp_id'];
  </div>
 
 <div class="col-md-9">
-
 <div class="container">
-    
 <div class="row"> 
-
-  <div class="col-md-6">
-
-      <br>
-
-  <h6>Post your product</h6>
+<div class="col-md-6">
+<br>
+<h6>Post your product</h6>
 
   <p><input type="checkbox" onclick="discount()" name="Discount">  Discount sales</p>
 
@@ -972,7 +943,9 @@ while ($row = mysqli_fetch_array($query_category)) {
         <br>
 </select></div>
 
-<div class="col-md-6"><input class="form-control" type="text" name="product_address" placeholder="Street / Estate / Neighbourhood"></div>
+<div class="col-md-6">
+
+  <input class="form-control" type="text" name="product_address" placeholder="Street / Estate / Neighbourhood"></div>
 
 </div>
 
@@ -1000,26 +973,16 @@ while ($row = mysqli_fetch_array($query_category)) {
   <div class="col-md-3">
 
     <select style="padding:8px;border-radius:3px;" id="discount_hide" class="btn-accordion active" name="discount">
-     
      <option value="">How many percentage</option>
-
-      <option value="10">10</option>
-
-      <option value="20">20</option>
-
-      <option value="30">30</option>
-
-      <option value="40">40</option>
-
-       <option value="50">50</option>
-
-        <option value="60">60</option>
-
-         <option value="70">70</option>
-
-          <option value="80">80</option>
-
-           <option value="90">90</option>
+     <option value="10">10</option>
+     <option value="20">20</option>
+     <option value="30">30</option>
+     <option value="40">40</option>
+     <option value="50">50</option>
+    <option value="60">60</option>
+    <option value="70">70</option>
+    <option value="80">80</option>
+    <option value="90">90</option>
 
   </select>
 
@@ -1141,9 +1104,7 @@ while ($row = mysqli_fetch_array($query_category)) {
 
 <div id="" class="sub_payment_dropdown active">
 
-
-
-  <br>
+<br>
 
 <input style="font-size: 13px;" type="number" id="subsequent_payment" name="subsequent_payment" min="1" class="form-control" placeholder="Subsequent payment">
 
@@ -1152,27 +1113,13 @@ while ($row = mysqli_fetch_array($query_category)) {
 </div>
 
 <div class="col-md-4"> 
-
-  <a type="button" class="btn btn-accordion" onclick="btn_duration()">Duration  <i class="fa fa-caret-down"></i></a>
-
+<a type="button" class="btn btn-accordion" onclick="btn_duration()">Duration  <i class="fa fa-caret-down"></i></a>
 <div class="duration_form active">
-
-
 <br><input type="number" style="font-size:13px;" name="duration" min="1" class="form-control " id="duration"  placeholder="Duration">
-
-
 </div>
-
-
 </div>
-
 <div class="col-md-4"> 
-
-  <div id="demo" class="collapse">
-
- 
-
-
+<div id="demo" class="collapse">
 </div>
 
 </div>
@@ -1197,59 +1144,30 @@ while ($row = mysqli_fetch_array($query_category)) {
 </div>
 
 <input type="hidden" name="user_id" value="$_SESSION['business_id'">
-
 <input type="hidden" name="sold" value="0">
-
 <input type="hidden" name="gift_picks" value="0">
-
 <input type="hidden" name="deals" value="0">
-
 <input type="hidden" name="views" value="0">
-
 <input type="hidden" name="likes" value="0">
-
+<input type="hidden" name="featured" value="0">
 <div id="bom"><div id="cy">
-
 <div style="float: right;">
  
- 
 <?php 
-
 require 'engine/configure.php';
 $getverification = mysqli_query($conn,"select * from verify_seller where sid ='".htmlspecialchars($_SESSION['business_id'])."' and verified = 1 ");
-
 if ($getverification->num_rows==0) {?> 
-
 <a type="submit" name="verify_id" onclick="verify_id()" class="btn btn-success"> Verify ID </a>
 <?php }else{?>
-
 <input type="submit" name="submit" value="Submit" class="btn btn-success">
-
 <div align="center" style="display: none;" id="loading-image"><img id="loader" height="50" width="50" src="loading-image.GIF"></div>
-
 <?php }?>
-
 </div>
-
 </form>
-
 </div>
-
 </div>
-
-
-
-
-
-
-  </div>
-
-
-
-
-
 </div>
-
+</div>
 </div>
 
 

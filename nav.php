@@ -10,7 +10,7 @@
 <div style="float: right;">
 
   
-    <a href="cart.php" class="button_navigation"  style="display: block!important;margin-top: -2px;"  id="carting" ><span class="numbering"></span><i class="fa fa-cart-shopping"></i></a>
+    <a href="cart.php" class="button_navigation"  style="display: block!important;margin-top: -3px;"  id="carting" ><span class="numbering"></span><i class="fa fa-cart-shopping"></i></a>
      <a href="" class="button_navigation"  style="display: block!important;margin-left:4px;margin-top: -2.8px;" ><img id="love"  style="color: black !important;" src="assets/icons/mdi_heart-outline-black.png"></a>
     <?php
    if (isset($_SESSION['business_id'])) {

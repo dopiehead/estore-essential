@@ -1,5 +1,28 @@
 
 <?php session_start(); ?>
+
+<?php 
+
+if (!isset($_SESSION['business_id'])) { ?>
+
+<script>
+  
+window.location.href='login.php';
+
+</script>
+
+<?php
+}
+?>
+
+
+
+
+
+
+
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,6 +37,7 @@
   <link rel="stylesheet" href="assets/css/flickity.min.css">
    <link rel="stylesheet" href="assets/css/cart.css">
       <link rel="stylesheet" href="assets/css/btn_scroll.css">
+              <link rel="stylesheet" href="assets/css/overlay.css">
   <script src="assets/js/sweetalert.min.js"></script> 
   <script src="assets/js/jquery-1.11.3.min.js"></script>
 <script src="assets/js/flickity.pkgd.min.js"></script>
@@ -583,7 +607,7 @@ display: none;
 }
 
 
-.open-btn{display: block !important;font-size: 16px; margin-top: -6px;color: black;}
+.open-btn{display: block !important;font-size: 16px; margin-top: 2px;color: black;}
 
 
 }
@@ -889,7 +913,7 @@ display: none;
 }
 
 
-.open-btn{display: block !important;font-size: 16px; margin-top: -6px;color: black;}
+.open-btn{display: block !important;font-size:px; margin-top:2px !important;color: black;}
 
 
 }
@@ -926,7 +950,7 @@ display: none;
 require 'engine/configure.php'; 
 
 $getNotification =mysqli_query($conn,"select * from vendor_notifications where recipient_id ='".htmlspecialchars($_SESSION['business_id'])."' and pending = 0");
-
+if ($getNotification->num_rows>0) {
 
 while ($row = mysqli_fetch_array($getNotification)) {
   
@@ -954,8 +978,10 @@ $message = $row['message'];
 </div>
 
 
-<?php } ?>
+<?php }  }   else{  echo"<div style='margin:120px 10px;opacity:0.7'><br><br>You have no notification yet<br></div>";      }
 
+
+ ?>
 
 
 
@@ -1008,7 +1034,6 @@ console.log(errorThrown);
 </script>
 
 
-
 <input type="hidden" name="sender_id" id="sender_id" value="<?php echo$senderID?>">
 <script type="text/javascript">
 $(document).on('click','.btn-reject',function(e){
@@ -1045,15 +1070,13 @@ console.log(errorThrown);
     });
 </script>
 
+<!------------------------------------------btn-scroll--------------------------------------------------->
 
+<a class="btn-down" onclick="topFunction()">&#8593;</a>
 
+<script src="assets/js/scroll.js" type="text/javascript"></script>
 
-
-
-
-
-
-
+<script src="assets/js/overlay.js" type="text/javascript"></script>
 
 </body>
 </html>

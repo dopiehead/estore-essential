@@ -53,6 +53,24 @@ margin-left: 30px !important;
 }
 }
 
+
+@media only screen and (max-width:767px){
+
+.nav_login{
+
+margin-left:40px !important;
+font-weight: normal !important;
+
+}
+
+}
+
+
+
+
+
+
+
 #loading-image{
 
 width:90px;
@@ -1194,7 +1212,7 @@ width: 140px;
 
 <div style="z-index: 99;position: relative;" class="row">
 <div class="col-md-4"><select id="btn-category" class="form-control">
-<option>Enter category</option>
+<option value="">Enter category</option>
 <option value="information technology">Information technology</option>
 <option value="mechanic">Mechanic</option>
 <option value="vulganizer">Vulganizer</option>
@@ -1289,8 +1307,8 @@ while ($row = mysqli_fetch_array($service_provider)) {
 $sp_id = $row['id'];  
 $sp_speciality = $row['sp_speciality'];
 echo"<div id='menu_sp'>";
-echo"<a id='{$sp_speciality}'  value='{$sp_speciality}' class='branch'><img src=".$row['sp_category_img']."></a><br>";
-echo"<a id='{$sp_speciality}' class='branch btn categoryName' value='{$sp_speciality}'>". $row['sp_speciality']."</a><br>";
+echo"<a id='{$sp_speciality}' href='sp_speciality.php?sp_speciality={$sp_speciality}'  value='{$sp_speciality}' class='branch'><img src=".$row['sp_category_img']."></a><br>";
+echo"<a id='{$sp_speciality}' href='sp_speciality.php?sp_speciality={$sp_speciality}' class='btn btn categoryName' value='{$sp_speciality}'>". $row['sp_speciality']."</a><br>";
 echo"</div>";
 
 }
@@ -1314,8 +1332,6 @@ include 'footer.php';
 ?>
 
 
-
-
 <script>
   
 $('.menu').flickity({
@@ -1331,18 +1347,18 @@ autoPlay:true
 $('.numbering').load('engine/item-numbering.php');
 $("#loading-image").hide();
 $('#elements').load('engine/service-provider-engine.php?page=1');
+
 $(document).on('click','.btn-success',function(e) {
 e.preventDefault();
 var page = $(this).attr('id');
 var sp_speciality = $('#btn_speciality').val();
 var sp_category = $('#btn-category').val();
 var sp_location = $('#location').val();
-
 if (page!='') {
 $('.btn-success').removeClass('active-button');
 $(this).addClass('active-button');
 }
-getData(sp_speciality,sp_category,sp_location,page);
+getData(sp_category,sp_location,sp_speciality,page);
   
 });
 
@@ -1352,16 +1368,8 @@ $("#elements").hide();
 var sp_speciality = $('#btn_speciality').val();
 var sp_category = $('#btn-category').val();
 var sp_location = $('#location').val();
-getData(sp_speciality,sp_category,sp_location);
+getData(sp_category,sp_location,sp_speciality);
 
-});
-
-$('#btn-category').on('change',function(e) {
-$("#loading-image").show();
-$("#elements").hide();
-var sp_category = $('#btn-category').val();
-var sp_location = $('#location').val();
-getData(sp_category,sp_location);
 });
 
 
@@ -1369,25 +1377,24 @@ $('#location').on('change',function(e) {
 $("#loading-image").show();
 $("#elements").hide();
 var sp_location = $('#location').val();
-getData(sp_location);
+var sp_category = $('#btn-category').val();
+getData(sp_category,sp_location);
 });
 
 
-
-
-$('.branch').on('click',function(e) {
+$('#btn-category').on('change',function(e) {
 $("#loading-image").show();
 $("#elements").hide();
-var sp_speciality = $(this).attr('id');
-getData(sp_speciality);
+var sp_category = $('#btn-category').val();
+getData(sp_category);
 });
 
 
-function getData(sp_speciality,sp_category,sp_location,page) {
+function getData(sp_category,sp_location,sp_speciality,page) {
 $.ajax({
 url:"engine/service-provider-engine.php",
 type:"POST",
-data:{'sp_speciality':sp_speciality,'sp_category':sp_category,'sp_location':sp_location,'page':page},
+data:{'sp_category':sp_category,'sp_location':sp_location,'sp_speciality':sp_speciality,'page':page},
 success:function(data) {
 $("#loading-image").hide();
 $("#elements").html(data).show();

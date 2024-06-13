@@ -53,6 +53,23 @@ margin-left: 30px !important;
 }
 
 
+@media only screen and (max-width:767px){
+
+.nav_login{
+
+margin-left:40px !important;
+font-weight: normal !important;
+
+}
+
+}
+
+
+
+
+
+
+
 body{font-family: poppins;}
 
 

@@ -16,7 +16,7 @@ $delete_items = mysqli_query($conn,"delete from service_providers where sp_id = 
 }
 }
 
-
+}
 ?>
 
 
@@ -36,7 +36,7 @@ if ($delete_items) {
 }
 }
 
-
+}
 }
 
 
@@ -67,5 +67,5 @@ if ($delete_items) {
 
 }
 
-
+}
 ?>

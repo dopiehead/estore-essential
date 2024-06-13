@@ -27,7 +27,7 @@ $condition .= " AND sp_location like '%".htmlspecialchars($sp_location)."%'";
 }
 
 $condition .= " ORDER BY sp_id DESC"; 
-$num_per_page =16;
+$num_per_page =20;
 if (isset($_POST['page'])) {
 $page = $_POST['page'];
 }
@@ -143,11 +143,6 @@ $next = $page+1;
 }
 
  ?> 
-
-
-
-
-
 
 </div>
 

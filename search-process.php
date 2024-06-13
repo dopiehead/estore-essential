@@ -46,8 +46,9 @@ $datafound = $data->num_rows;
      <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
      <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;700&family=Roboto&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/flickity.min.css">
+   <link rel="stylesheet" href="assets/css/overlay.css">
+        <link rel="stylesheet" href="assets/css/btn_scroll.css">
    <link rel="stylesheet" href="assets/css/cart.css">
-      <link rel="stylesheet" href="assets/css/btn_scroll.css">
   <script src="assets/js/sweetalert.min.js"></script> 
   <script src="assets/js/jquery-1.11.3.min.js"></script>
 <script src="assets/js/flickity.pkgd.min.js"></script>
@@ -56,6 +57,169 @@ $datafound = $data->num_rows;
 body{
 
 	font-family: poppins;
+}
+
+h1 img{
+  margin-left: 10px;
+}
+
+
+.flickity-page-dots{
+
+ 
+  bottom: -35px;
+}
+
+
+ .flickity-page-dots .dot{
+
+  width:100px !important;
+  height: 6px;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  
+}
+
+@media only screen and (max-width:767px){
+
+
+ .flickity-page-dots .dot{
+
+  width:40px !important;
+  height: 4px;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  
+}
+
+
+}
+
+
+
+.flickity-page-dots .dot.is-selected{
+
+  background-color:rgba(255,165,50,1);
+}
+
+
+
+
+
+
+#data_price,#data_name{
+
+  padding-left: 20px;
+  font-size: 13px;
+  text-transform: capitalize;
+}
+
+
+
+#assets_container .package  img{
+
+
+width: 210px !important;
+height: 180px !important;
+float: right;
+
+}
+
+
+@media only screen and (max-width:497px){
+
+
+
+
+#assets_container .package  img{
+
+
+width: 100%;
+
+height: 80px;
+
+
+}
+
+
+#assets_container .package{
+
+
+display: inline-block;
+
+margin-right: 20px !important;
+
+border:1px solid rgba(0,70,90,0.1);
+
+padding: 1px;
+
+width:210px !important;
+
+
+}
+
+
+
+
+
+
+}
+
+
+@media only screen and (min-width:498px) and (max-width:767px){
+
+#assets_container .package  img{
+
+
+width: 17em;
+
+height: 80px;
+
+}
+
+
+#assets_container .package{
+
+
+display: inline-block;
+
+margin-right: 20px;
+
+border:1px solid rgba(0,70,90,0.1);
+
+padding: 1px;
+
+
+}
+
+}
+
+
+
+#assets_container .package{
+
+
+display: inline-block;
+
+margin-right: 20px;
+
+border:1px solid rgba(0,70,90,0.1);
+
+padding: 1px;
+
+width:100%;
+
+}
+
+
+#assets_container {
+
+font-size: 10px;
+
+width: 100%;
+
+margin-top: 30px;
+
 }
 
 
@@ -88,6 +252,17 @@ font-weight: normal !important;
 
 font-weight: normal !important; 
 margin-left:50px;
+
+}
+
+@media only screen and (max-width:767px){
+
+.nav_login{
+
+margin-left:40px !important;
+font-weight: normal !important;
+
+}
 
 }
 
@@ -664,7 +839,7 @@ display: none;
 }
 
 
-.open-btn{display: block !important;font-size: 16px; margin-top: -6px;color: black;}
+.open-btn{display: block !important;margin-left:-4px; color: black;}
 
 
 }
@@ -686,6 +861,7 @@ display: none;
 
 <?php include 'nav.php';  ?>
 
+<?php include 'overlay.php';  ?>
 
 <br><br>
 	<div style="visibility: hidden;" class="nav-container container">
@@ -695,26 +871,50 @@ display: none;
 
 </div>
 <br>
-
 <div class="container">
+
+
+<?php
+
+require 'engine/configure.php';
+$featured = mysqli_query($conn,"SELECT * FROM item_detail where sold = 0 and featured = 1 order by id desc");
+if ($featured->num_rows>0) { ?>
+
+<h6><b style="color: white; background-color: rgba(0,70,90,0.8);padding: 5px;">Featured</b></h6><br>
+
+<div class="assets_container featured container">
+<?php
+while ($getfeaturedProducts = mysqli_fetch_array($featured)) { ?>
+<div class="package" style="border:1px solid rgba(0,0,0,0.1);margin-right:25px;">
+<span style="padding:5px;" id="data_name"><?php echo$getfeaturedProducts['product_name']?></span><br>
+<span style="opacity: 0.5" id="data_price">From<br></span>
+<span style="opacity: 0.5" id="data_price"> <?php echo$getfeaturedProducts['product_price']?></span>
+<span style="opacity: 0.5" id="data_price"> <?php echo" $ ".round($getfeaturedProducts['product_price']/$dollar_rate)?></span><br>
+
+<a href="product-details.php?id=<?php echo$id ?>"><img style="height: 150px; width:200px;" src='<?php echo$getfeaturedProducts['product_image']?>' ></a><br>
+</div>
+  
+
+
+<?php } echo'</div>'; } else{   ?>
 
 <div class="row">
 
 <div id="coca_cola" class="col-md-6">
 
-	<img src="assets/img/coca_cola.png">
-
+<img src="assets/img/coca_cola.png">
 </div>
 
 
 <div id="coca_cola" class="col-md-6">
 
-	<img src="assets/img/coca_cola.png">
-
-
+  <img src="assets/img/coca_cola.p
+ng">
+</div>
 </div>
 
-</div>
+
+<?php       }     ?>
 
 <br>
 
@@ -1023,9 +1223,40 @@ $('.main').flickity({
 </script>
 
 
+
+<script>
+  
+$('.featured').flickity({
+ cellAlign: 'left',
+contain: true,
+autoPlay:true,
+freeScroll: true,
+ friction:0.52,
+wrapAround: true,
+contain: true,
+prevNextButtons: false,
+
+});
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!------------------------------------------btn-scroll--------------------------------------------------->
 
-<a class="fa fa-arrow-up btn-down" onclick="topFunction()">&#8593;</a>
+<a class="btn-down" onclick="topFunction()">&#8593;</a>
 
 <script src="assets/js/scroll.js" ></script>
 <script src="assets/js/overlay.js" type="text/javascript"></script>

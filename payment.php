@@ -3,7 +3,21 @@
 session_start();
 require 'engine/configure.php';
 
+if (isset($_SESSION['business_id'])) {
+$user_id=$_SESSION['business_id'];
+$useremail=$_SESSION['business_email'];
+}
+
+if (isset($_SESSION['sp_id'])) {
+$user_id=$_SESSION['sp_id'];
+$useremail=$_SESSION['sp_email'];
+}
+
+if (isset($_SESSION['id'])) {
 $user_id=$_SESSION['id'];
+$useremail=$_SESSION['email'];
+}
+
 
 $product_id=$_SESSION['product'];
 
@@ -17,13 +31,13 @@ exit();
 
 
 
-$mypay=mysqli_query($conn,"select * from comment where id='$product_id' and sid ='$user_id'");
+$mypay=mysqli_query($conn,"select * from item_detail where id='$product_id' and user_id ='$user_id'");
 while ($pay=mysqli_fetch_array($mypay)) {
     
-$phone_number = $pay['cell'];
-$package = $pay['price'] * 0.10;
+$phone_number = $pay['phone_number'];
+$package = $pay['product_price']* 0.10;
 
-
+$_SESSION['package'] = $package;
 
 }
 
@@ -46,671 +60,775 @@ $package = $pay['price'] * 0.10;
   <link rel="stylesheet" href="assets/css/flickity.min.css">
    <link rel="stylesheet" href="assets/css/cart.css">
      <link rel="stylesheet" href="assets/css/overlay.css">
+    <link rel="stylesheet" href="assets/css/btn_scroll.css">
   <script src="assets/js/sweetalert.min.js"></script> 
   <script src="assets/js/jquery-1.11.3.min.js"></script>
 <script src="assets/js/flickity.pkgd.min.js"></script>
 <style type="text/css">
 
 
-  
 
-html{
-    
-    scroll-behavior:smooth;
+
+body{font-family: poppins;}
+
+
+.card-home{
+
+ display:flex ;
+  align-items: center;
+  justify-content: center; 
 }
 
 
+.card{
 
+  margin-top: 30px;
 
-.col-md-4{
-
-border:1px solid transparent;
-box-shadow: 0px 0px 5px rgba(0,0,0,0.3);
-padding:15px;margin-bottom:18px;
-border-radius:10px;
-
-
-}
-
-
-.icon-bar{
-
-
-  position: fixed;
-  top: 75%;
-  left: 0px;
-  transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-}
-.icon-bar a{
-
-display:  block;
-  text-align: center;
-  padding: 10px;
-  transition: all 0.5s;
-  color: white;
-  font-size: 15px;
-}
-
-.btn-warning{
-
-  color:white;
-}
-
-.facebook{
-
-background-color: #3b5998;
-  color: white;
-
-}
-.twitter{
-
-background-color: #55acee;
-  color: white;
+  width: 40%;
   
 }
 
-.instagram{
 
-background-color: #dd4b39;
-  color: white;
- 
+@media only screen and (max-width:797px){
+
+.card{
+
+  margin-top: 30px;
+
+  width: 100%;
 }
 
-.telegram{
-
-background-color: #bb0000;
-  color: white;
- 
 }
-
-
-.col-md-6{
-
-
-margin-bottom:32px;
-margin-top:20px;
-padding:20px;
-font-size:14px;
-font-family: 'monserrat',sans-serif;
-}
-
-.fa{
-
-  font-size:15px;;
-}
-
-.container{
-
-
-  z-index: 55;
-}
-
-figure{margin-top: 50px;mb}
-
-#about{
-  font-size: 18px;
-  font-weight: bold;
-  font-family:'monserrat',sans-serif;
-margin-top: 20px;
-margin-bottom:30px;
-color:black;
-}
-
-
-
-#content{
-margin-top:-15px;
-font-weight: bold;
-font-family:'monserrat',sans-serif;
-text-transform:capitalize;
-position: absolute;
-left:45.4%;
-font-size:14px;
-color:lightgreen;
-
-
-}
-
-.gallery:hover{
-
-opacity: 0.8;
-
-text-decoration: none;
-
-color: white;
-
-}
-
-
-.overlay,#overlay{
-
-  display:none;
-}
-
-.open-btn{
-
-display: none;
-font-size:31px;
-margin-top:-12px;
-
-}
-.btn-danger{
-
-	border:1px solid transparent;
-	box-shadow: 0px 3px 12px rgba(0,0,0,0.5);
-	border-radius:15px;
-  padding:8px;
-}
-
-
-
-
-
-#activex{
- border-bottom: 2px solid rgba(255,165,50,1);
- border-radius: none;
-   
-}
-
-
-
-.faq:hover,.how:hover{
-
-opacity: 0.8;
-
-text-decoration: none;
-
-color: white;
-
-
-
-}
-
-.how{
-font-weight: bold;
-font-family:'monserrat',sans-serif;
-float: right;
-
-font-size:15px;
-
-cursor: pointer;
-
-color:white;
-
-
-
-padding:8px 1px;
-
-margin-right:15px;
-
-}
-
-.gallery{
-
-font-family:'monserrat',sans-serif;
-opacity:;
-float: right;
-
-font-size:15px;
-
-cursor: pointer;
-
-color:white;
-
-
-
-padding:8px 1px;
-
-margin-right:15px;
-
-font-weight: bold;
-
-}
-
-
-
-.imgitem{
- margin-top:10%;   
- box-shadow:0px 0px 5px rgba(0,0,0,0.4);
- 
- width:60%;
- border-radius:50%;     
-}
-
-
-
-
-
-
-
-.btn-down{
-    
-box-shadow:0px 5px 8px 0px rgba(0,0,0,0.5);    
-   
-
-  top: 80%;
-  display: none;
-
-border:2px transparent transparent;
-
-margin-left: 15px;
-
-font-weight: bold;
-
-cursor: pointer;
-
-background-color:rgba(255,165,50,1);
-
-color: white !important;
-
-font-size: 20px;
-
-position: fixed;
-
-z-index: 100;
-
-
-
-  }
-
-.col-md-3{
-    
-    display:;
-    
-}
-
-
-
-
-.group{
-
-}
-
-h6 {
-
-margin-top:30px;
-
-}
-
-
-
-
-
-
-
-h6 span{
-padding:8px;
-background-color: rgba(0,70,90,0.7);
-  color:white;
-  margin-bottom:10px;
-  
-  font-size:16px;
-
-}
-
-
-
-
-
-
-
-.btn-search{
-display:none;
-  background-color: rgba(255,165,50,1);
-    color: white;
-     box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.2);
-
-}
-.btn-search:focus{
-
-  background-color: rgba(255,165,50,1);
-    color: white;
-    outline: none;
-    box-shadow: none;
-}
-
-
-.btn-search:hover{
-
-    color: white;
-    opacity: 0.8;
-}
-
-
-
-a:hover{
-
-opacity: 0.8;
-
-}
-
-#price{
-
-	text-align:;
-	padding:8px;
-	color:rgba(255,0,100,0.7);
-	font-size:16px;
-	font-family:sans-serif;
-	font-weight: bold;
-}
-
-#duration{
-
-	text-align:;
-	padding:8px;
-	color:green;
-	font-size:16px;
-	font-family:sans-serif;
-}
-
-
-
-
-
-
-h1{
-position:;
-top:0;
-
-z-index:100;
-
-
-width:100%;
-
-height:68px;
-
-background-color:rgba(0,70,90,0.7);
-
-padding:10px 8px;
-transition:top o.3s;
-
--webkit-box-shadw:0 0 5px red !;
-
-box-shaow:0 0 5px ;
-
-
-
-} 
 
 
 
 h1 img{
 
-float:left; 
-
-opacity:1;
-
-height: 60px;
-
-width:135px;
-
-margin-left:-8px;
-
-margin-top: -6px;
-
-}
-.faq{
-
-display: block;
-
-float: right;
-
-font-size:15px;
-
-cursor: pointer;
-
-color: white;
-
-border-radius:8px;
-
-padding:8px 3px;
-
-margin-right:13px;
-font-weight: bold;
-font-family:'monserrat',sans-serif;
-
+  margin-left: 10px;
 }
 
 
 
 
 
-
-
-
-
-@media only screen and (orientation:landscape){
-
-  
-  
-
-  
- 
-
-
-
+#think{
+margin-left: 210px !important;
 
 }
 
+@media only screen and (max-width:797px){
+#think{
+margin-left: 30px !important;
 
-
-
-
-
-
-
-
-@media only screen and (max-width:497px){
-
-h6 span{
-padding:8px;
-background-color: rgba(0,70,90,0.7);
-  color:white;
-  margin-bottom:10px;
-  font-size:16px;
-  
-  
-
-} 
-
-
-
-h1 {
-
-height:60px;
-
+}
 }
 
 
-
-} 
 @media only screen and (max-width:767px){
-#open-btn{
-   display: block;
-  color: white;
-  font-size: 35px;
-  float: right;
-  cursor: pointer;
-  
-  
+
+.nav_login{
+
+margin-left:40px !important;
+font-weight: normal !important;
+
 }
 
-
-h1{
- height:63px;
-
-    
-    
-} 
-h1 img{
-
-float:left; 
-
-opacity:1;
-
-height:43px;
-
-width:125px;
-
-margin-left:-3px;
-margin-top:-1px;
-
-
-    
 }
 
 
 
 
+.product_list h6{
 
-
-
-
-
-
-#nameitem,#locitem,#conitem,#catitem,#messageitem,#priceitem{
-  font-size:15px; 
-   margin-left:0px; 
-   padding:8px; 
- width:100%;
- word-wrap:break-word;
-    
-}
-#main{
-    
-height:140px;
-    
-    
-    
-}
-.imgitem{
-    
- box-shadow: 0px 0px 8px rgba(0,0,0,0.4);   
-    
-    
-}
-
-
- 
-
-.faq,.gallery,.how{
-
-  font-size:14px;
-}
-
-h1 img{
-
-
+font-weight: bold;
+margin: 23px 0px;
 
 }
 
-@media only screen and (max-width:1266px){
-    
 
-   
-    
-    
-    
-    
-    
-    
-    
-    
-    
- body{
-    
-    font-size:18px;
-}   
-.fa-cc-mastercard,.fa-paypal,.fa-credit-card{
-    
- font-size:19px;margin-left:3px;margin-right:3px;   
-    
-}    
-    
-.fa-paypal{color:blue;}    
-    
- .how,.gallery,.faq{display: none;}
- 
-.overlay{
-height: 0%;
-width: 100%;
-display: block;
-position:absolute;
-z-index: 300;
-top: 67px;
-right: 0;
-color:#818181;
-background-color:#f5f5f5;
-background-color:#f5f5f5;
-overflow-x:hidden;
-transition: 0.5s;
+#share{
+
+  height:14px;
+  width: 15px;
+}
+
+
+
+.fa-cart-shopping{
+
+font-size: 14px;
+padding:3px;
 
 }
-.overlay-content{
-position:relative;
-top: 20%;
-width: 100%;
+
+
+
+
+.fa-check{
+
+font-size: 12px;
+color: white;
+border:1px solid transparent;
+border-radius: 50%;
+background-color: darkgreen;
+padding:3px;
+
+}
+
+
+
+
+
+
+
+.section_search{
+
 text-align: center;
 
 }
 
-.overlay a{
-padding: 8px;
-font-size:15px;
-color: #818181; 
-display: block;
-text-transform: capitalize;
+
+@media only screen and (max-width:498px){
+
+
+.section_search{
+text-align: left !important;
+}
+
+
+.section_search span{
+
+font-size: 12px;
+position: relative;
+left: -3px;
+
+}
+
+
+}
+
+
+
+@media only screen and (min-width:498px) and (max-width:990px){
+
+
+.section_search{
+text-align: left !important;
+}
+
+
+.section_search span{
+
+font-size: 12px;
+position: relative;
+left: -1px;
+
+
+}
+
+.category_select{
+
+  font-size: 13px;
+  margin-left:4px;
+  height: 33px;
+    width: 130px;
+  
+}
+
+.section_search input[type=search] {
+
+  font-size: 14px;
+    width:260px !important;
+    margin-left: 8px;
+
+}
+}
+
+
+
+
+
+.section_search input[type=search] {
+
+  
+  font-size: 14px;
+
+  width:400px;
+
+  margin-left: 10px;
+
+  height: 33px;
+
+  box-shadow: 0px 0px 3px rgba(0,70,90,0.5);
+
+  border:1px solid transparent;
+
+
+
+}
+
+
+
+
+
+@media only screen and (min-width:440px) and (max-width:797px){
+
+
+.section_search input[type=search] {
+
+  font-size: 13px;
+    width:205px;
+    margin-left: 5px;
+
+}
+
+
+}
+
+
+
+.section_search  select:focus{
+
+border:2px solid skyblue;
+outline: 2px solid skyblue;
+
+}
+
+
+
+
+
+
+.section_search input[type=search]:focus {
+
+  
+  outline: 2px solid skyblue;
+
+
+
+}
+
+
+
+@media only screen and (max-width:498px){
+
+.category_select{
+
+  font-size: 13px;
+  margin-left:8px;
+  height: 33px;
+    width: 125px;
+  font-weight: bold;
+  text-transform: capitalize;
+  border:1px solid transparent;
+  box-shadow: 0px 0px 3px rgba(0,70,90,0.5);
+}
+
+
+}
+
+
+
+
+
+
+.category_select{
+
+  font-size: 13px;
+  margin-left: 20px;
+  height: 33px;
+  font-weight: bold;
+  text-transform: capitalize;
+  border:1px solid transparent;
+    box-shadow: 0px 0px 3px rgba(0,70,90,0.5);
+}
+
+
+
+
+
+
+.h6{
+
+  font-size: 13px;
+  font-weight: bold;
+}
+
+
+#discount{
+background-color: rgba(255,195,50,0.4);
+color: rgba(255,95,50,1);
+border: 1px solid transparent transparent;
+position:relative;
+top:45px;
 font-weight: bold;
-font-family:'monserrat',sans-serif;
-transition: 0.3s;
-}
-.overlay .close-btn{
-position: absolute;
-top: 2px;
-left: 4px;
+padding:3px;
+left: 79%;
 
-font-size: 25px;
-color:white;
+
+font-size:13px;
+
+} 
+
+
+
+
+.nav_signup{
+
+
+border:1px solid none;
+border-left:1px solid white;
+border-left-color: rgba(192,192,192,1);
+margin-left:0px;
+font-weight: normal !important;
+
+
+
+}
+
+
+#main{
+
+background: linear-gradient(to top right,rgba(0,70,90,0.9),rgba(0,44,70,1)),url(assets/img/coca_cola.png);
+background-size: cover;
+background-position: center;
+width: 100%;
+height: 80px;
+margin-top: 50px;
+
+}
+
+
+#main h6{
+
+color: white;
+
+text-align: center;
+
+font-weight: bold;
+
+position: relative;
+
+top: 35px;
+
+text-transform: uppercase;
+
+font-size: 16px;
+
+
+}
+
+@media only screen and (max-width:767px){
+
+#main h6{
+
+top: 20px;
+
+
+}
+
+
+}
+
+
+/*--------------------------------------------------------------
+# product list
+--------------------------------------------------------------*/
+
+
+
+#package{
+
+background-color:rgba(243,243,243,0.1);padding-bottom: 8px;margin-bottom:50px;border:1px solid rgba(0,70,90,0.2);
+padding:0px;
+width:190px;
+display: inline-block;
+margin:1em 1em;
+
+}
+
+@media only screen and (max-width:498px){
+
+
+#package{
+
+background-color:rgba(243,243,243,0.1);padding-bottom: 8px;margin-bottom:50px;border:1px solid rgba(0,70,90,0.2);
+padding: 0px;
+width:185px;
+display: inline-block;
+margin:1em 1.5em;
+
+}
+
+
+
+}
+
+
+
+
+
+/*--------------------------------------------------------------
+# view icon
+--------------------------------------------------------------*/
+
+#noviews{
+
+position:relative;
+top:45px;
+left:0px;
+background-color: rgba(0,0,0,0.8);
+color: white;
+font-weight: bold;
+padding: 7px;
+z-index: ;
+font-size:11px;
+
+}
+
+
+
+ 
+#views{
+
+position:relative;
+top:45px;
+left:-37px;
+background-color: rgba(0,0,0,0.8);
+color: white;
+font-weight: bold;
+padding: 7px;
+z-index: ;
+font-size: 11px;
+
+}
+
+
+
+
+.discount_main{
+
+  padding-top: 10px;
+    margin-top: 15px;
+    width: 100%;
+    height: 50px;
+    background-color: rgba(192,192,192,0.4);
+    border:1px solid transparent;
+    box-shadow: 0px 0px 5px rgba(0,0,0,0.3);
+    text-align: center;
+}
+
+
+.discount_main p{ 
+font-size: 13px;
+}
+
+
+
+
+.nav_login{
+margin-left:80px;
+font-weight: normal !important;
+
+}
+
+
+/*--------------------------------------------------------------
+# navigation bar mobile
+--------------------------------------------------------------*/
+
+@media only screen and (max-width:1200px){
+
+.button_navigation{
+
+font-size:12px;
+cursor: pointer;
+color:black;
+padding:5px 0px;
+margin-right:10px !important;
+font-weight: bold;
+
+}
+
+
+}
+
+
+
+
+
+
+
+
+#coca_cola img{
+width:100%;
+}
+
+/*--------------------------------------------------------------
+# navigation bar 
+--------------------------------------------------------------*/
+
+
+.button_navigation{
+
+font-family:poppins;
+
+float:left;
+
+font-size:13px;
+
+cursor: pointer;
+
+color:black;
+
+padding:8px 1px;
+
+margin-right:32px;
+
+font-weight: bold;
+
+}
+
+@media only screen and (max-width:1200px){
+
+.button_navigation{
+
+display: none;
+
+}
+
+
+
+
+}
+
+.button_navigation:hover{
+
+opacity: 0.8;
+
+text-decoration: none;
+
+color: white;
+
+}
+
+
+.nav-container{
+  width: 100%;
+  margin-top: 30px;
+  /*display: flex;
+  align-items: center;
+  justify-content: space-between;*/ }
+
+
+/*--------------------------------------------------------------
+# anchor category
+--------------------------------------------------------------*/
+
+
+
+@media only screen and (max-width:480px){
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+/*--------------------------------------------------------------
+# navigation bar img
+--------------------------------------------------------------*/
+
+
+.button_navigation img{
+
+width: 20px;
+height: 18px;
+
+}
+
+
+/*--------------------------------------------------------------
+# navigation search bar
+--------------------------------------------------------------*/
+
+
+#input_search{
+
+font-size: 12px;
+
 border:1px solid transparent;
-background-color:rgba(255,40,30,0.8);
-border-radius:50%;
-padding:0px 10px;
+font-weight: normal;
 
+background-color: rgba(192,192,192,0.5);
+border-radius: 12px;
 
-}
-
-.overlay a:hover,.overlay a:focus{
-  color: #f1f1f1;
-  text-decoration: none;
-}
-
-
-
-
-
-
-
-
-
-
-
+width: 390px;
 
 
 }
 
 
+/*--------------------------------------------------------------
+# navigation search bar button
+--------------------------------------------------------------*/
+
+
+#btn-search{
+
+  font-size: 10px;
+  border-radius:0px 13px 13px 0px;
+  margin-left: -80px;
+  padding: 7px 8px;
+  position: relative;
+z-index: 9;
+color: white !important;
+}
+
+
+/*--------------------------------------------------------------
+# section product  mobile
+--------------------------------------------------------------*/
 
 
 
 
+/*--------------------------------------------------------------
+# product list
+--------------------------------------------------------------*/
 
+
+#priceitem{
+
+font-family:Poppins;
+font-weight: bold;
+color:black;
+opacity: 0.8;
+text-transform:capitalize;
+font-size:14px;
+padding:10px;
+position: relative;
+margin-bottom: 8px;
+
+
+}
+
+#conitem,#locitem,#catitem{
+font-size:12px;
+font-family:poppins;
+color: rgba(0,0,0,0.9);
+padding:10px;
+width:100%;
+
+font-weight: bold;
+text-transform: capitalize;
+
+
+}
+
+
+#imgitem{
+height: 120px;
+width:100%;
+
+}
+
+
+
+#nameitem a{
+  font-size:12px;
+  font-weight:normal;
+  padding-left:10px;
+  text-transform:capitalize;
+  color: rgba(0,0,0,0.4);
+  padding-top: 8px;
+
+ word-wrap:break-word;
+ text-align:center;
+  font-family:poppins;  
+}
+
+/*--------------------------------------------------------------
+# footer
+--------------------------------------------------------------*/
+
+.footer h6{
+
+  font-weight: bold;
+
+  font-size: 16px;
+
+  margin-bottom: 10px;
+}
+
+
+.footer p{
+
+  font-size: 13px;
+}
+
+
+.footer{
+
+
+  padding: 10px 30px;
+
+  background-color: rgba(192,192,192,0.5);
+}
+
+
+.footer img{
+
+width: 140px;
+
+}
+
+.footer button{
+
+  font-size: 13px;
+
+  border:1px solid transparent;
+
+  background-color: rgba(0,0,0,0.6);
+
+  color: white;
+
+  margin-bottom: 8px;
+
+  display: none;
+
+}
+
+
+
+.footer{
+
+  margin-top: 30px;
+}
+
+
+
+
+@media only screen and (max-width:1200px){
+
+.button_navigation{
+
+display: none;
+
+}
+}
 
 
 </style>
-
-
-
 
 </head>
 
@@ -719,204 +837,22 @@ padding:0px 10px;
 
 <body>
 
+<?php  include 'nav.php';         ?>
 
-<h1>
+<?php  include 'overlay.php';   ?>
 
+<br><br>
 
 
-<div id="myform" class="overlay" id="overlay">
-  <button class="btn close-btn" onclick="closeform()">&times;</button>  
- <div class="overlay-content">
+<div style="text-align: center;" class="container">
 
-<a href="hoverdowntabs.php" class="" >
+<div class="card-home">
 
-<?php 
-
-if (!empty($_SESSION['email'])) {
-  
-
-
-$you=$_SESSION['email'];
-
-require 'connection.php';
-
-$inbox="select * from messages where receiver_email = '$you' and is_receiver_deleted = 0 and has_read = 0 group by sender_email order by id desc ";
-
-$inx =mysqli_query($con, $inbox);
-
-$datafound=$inx->num_rows;
-
-
-
-echo "(".$datafound.")<i class='fa fa-envelope'></i> MESSAGES</a>";
-
-}
-
- ?>
-
-
-
-
-
-
-<?php
-
- if (!empty($_SESSION['email'])) {
-
-echo'
-
-<a href="sport.php" class="" >GALLERY</a>
-
-';
-
-
-
-
-
-  echo'
-
-
-<a  href="logoutkwasaf.php" class="" ><i class="fa fa-sign-out"></i> SIGN OUT</a>
- ';
-
-
-
-} 
-
-
-else{
-
-echo'
-
-<a href="newsignup.php" class="" ><i class="fa fa-user"></i> PROFILE</a>
-
-';
-
-}
-
-     ?>
-
-
-
-
-
-
-
-
-
-
-  </div></div>
-
-
-
-
-
-
-
-
-
-
-
-
-<?php
-
- if (!empty($_SESSION['email'])) {echo'
-
-<a  href="logoutkwasaf.php" class="faq" ><i class="fa fa-sign-out"></i> SIGN OUT</a>
-
-
- ';
-
-
-echo'
-
-<a href="sport.php" class="faq" >GALLERY </a>
-
-';
-
-
-
-
-
-
-} 
-
-
-else{
-
-echo'<a href="newsignup.php" class="gallery" ><i class="fa fa-user"></i> PROFILE</a>';
-
-}
-
-     ?>
-
-
-
-
-<a href="hoverdowntabs.php" class="gallery" >
-
-<?php 
-
-if (!empty($_SESSION['email'])) {
-  
-
-
-$you=$_SESSION['email'];
-
-require 'connection.php';
-
-$inbox="select * from messages where receiver_email = '$you' and is_receiver_deleted = 0 and has_read = 0 group by sender_email order by id desc ";
-
-$inx =mysqli_query($con, $inbox);
-
-$datafound=$inx->num_rows;
-
-
-
-echo "(".$datafound.")<i class='fa fa-envelope'></i></a>";
-
-}
-
- ?>
-
-
-
-
-<a class="btn open-btn" id="open-btn" onclick="openform()" ><i style="color: white;font-size:28px;" class="fa fa-align-justify"></i></a>
-
-
-<?php
-
-if (!empty($_SESSION['email'])) {
-
- echo'<a href="index.php" style="text-decoration: none;"><img style="" align="" src="mymain.PNG" height="" width=""></a>';
-}
-
-else{
-  echo'<a href="signup.php" style="text-decoration: none;"><img style="" align="" src="mymain.PNG" height="" width=""></a>';
-}
-
-
-
-
-
-?>
-
-</h1>
-
-
-
-
-<br>
-
-
-<div class="container">
-
-<div align="center" class="card">
+<div  class="card">
 
 <div class="card-head">
 
-<h6 class="container" align=""><span>Featured Products</span></h6></div><br>
+<br><h6 style="text-align: center;" class="container" align=""><span><b>Featured Products</b></span></h6></div><br>
 
 <div class="card-body">
 
@@ -927,7 +863,7 @@ else{
 <br><br>
 
 
-<p style="font-family: 'montserrat';font-size:13px;">Each ad can only be promoted once. Package is <b style='color:red;'>10% of the item been paid uploaded</b>. <br>If you still wish to make payment, please continue to the proceed button and click below. <br><br>All featured products will be at the top of every page, all social media platforms including <b style='color:blue'>Facebook, Twitter plus Instagram </b>and Ad list till the duration expires(<b style="color:darkgreen;">4 weeks</b>).</p>
+<p style="font-family:poppins;font-size:0.9rem;">Each ad can only be promoted once. Package is <b style='color:red;'>10% of the item been uploaded</b>. <br>If you still wish to make payment, please continue to the proceed button below and click on it. <br><br>All featured products will be at the top of every page, all social media platforms including <b style='color:blue'>Facebook, Twitter plus Instagram </b>and Ad list till the duration expires(<b style="color:darkgreen;">4 weeks</b>).</p>
 
 <span id="price">Price: &#8358;<?php echo $package;  ?></span><br>
 
@@ -935,11 +871,9 @@ else{
 <span id="duration">Duration: 4 weeks</span><br><br>
 
 
-<form method="post" action="https://checkout.flutterwave.com/v3/hosted/pay">
+<form method="POST" action="initialize.php">
 
-<input type="hidden" name="public_key" value="FLWPUBK_TEST-588208bcbb9412e4341e6527c4b95018-X">
-
-<input type="hidden" name="redirect_url" value="https://atemarket.com/response.php">
+<input type="hidden" name="redirect_url" value="https://e-stores.com/response.php">
 
 <input type="hidden" name="amount" value="<?php echo $package;  ?>">
 
@@ -947,138 +881,23 @@ else{
 
 <input type="hidden" name="product_id" value="<?php echo$_SESSION['product']?>">
 
-<input type="hidden" name="customer[name]" value="<?php echo$_SESSION['name']?>">
+<input type="hidden" name="name" value="<?php echo$_SESSION['name']?>">
 
-<input type="hidden" name="customer[email]" value="<?php echo$_SESSION['email']?>">
+<input type="hidden" id="email" name="email" value="<?php echo$useremail?>">
 
 <input type="hidden" name="phone_number" value="<?php echo$phone_number?>">
 
-<input type="hidden" name="tx_ref" value="<?php echo$txn_ref;?>">
+<input type="hidden" name="tx_ref" id="txn_ref" value="<?php echo$txn_ref;?>">
 
-<button id='individual' name="individual" id="start-payment-button" onClick="pay()" style="color: white;font-family: sans-serif;font-size:;" class="btn btn-danger ">PROCEED</button>
+<button type="submit" id='submit' name="submit" style="color: white;font-family: sans-serif;font-size:;" class="btn btn-danger ">PROCEED</button>
+
 </form>
 
 
 
-
 </div>
-
-
-
-<script>
- 
-    
-    
-    
-    
-    
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<script>
-      
-      
-     $(document).scroll(function() {
-  var y = $(this).scrollTop();
-  if (y > 20) {
-    $('.btn-down').fadeIn();
-  } else {
-    $('.btn-down').fadeOut();
-  }
-});
-
-
-
-$(document).scroll(function() {
-  var y = $(this).scrollTop();
-  if (y > 20) {
-    $('.btn-down').fadeIn();
-  } else {
-    $('.btn-down').fadeOut();
-  }
-}); 
-      
-      
-    
-      
-  </script>
-
-
-
-  <script>
-      
-    function topFunction() {
-
-
-
-  document.body.scrollTop = 0;
-  
-
-
-  document.documentElement.scrollTop = 0;
-
-
-
-}
-  
-      
-      
-  </script>
-
-
-
-<script type="text/javascript">
-function openform() {
-  document.getElementById("myform").
-  style.height="38%";
-}
-
-function closeform() {
-  document.getElementById("myform").
-  style.height="0%";
-}
-  
-
-
-
-
-</script>
+</div>
 
 <script type="text/javascript">
 $(document).ready(function(){
@@ -1093,14 +912,19 @@ $(document).ready(function(){
 
 </script>
 
-<script>
-  $(window).load(function() {
-    $('#over').hide();
-    $('#over-parent').hide();
-  });
-</script>
 
-<script src="https://newwebpay.interswitchng.com/inline-checkout.js"></script>
+
+<!------------------------------------------btn-scroll--------------------------------------------------->
+
+<a class="btn-down" onclick="topFunction()">&#8593;</a>
+
+<script src="assets/js/scroll.js" type="text/javascript"></script>
+
+<script src="assets/js/overlay.js" type="text/javascript"></script>
+
+<script src="https://js.paystack.co/v1/inline.js"></script>
+
+
 <br><br>
 </body>
 

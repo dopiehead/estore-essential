@@ -35,8 +35,32 @@ $sp_phone2 = $row['sp_phonenumber2'];
 ?>
 
 
+<?php 
+
+if (!empty($_SESSION["id"])) {
+$date = $_SESSION['date'];
+$userId = $_SESSION['id'];
+$username =$_SESSION['name'];
+$useremail =$_SESSION['email'];
+}
+if (!empty($_SESSION["business_id"])) {
+$business_date = $_SESSION['business_date'];
+$userId = $_SESSION['business_id'];
+$username =$_SESSION['business_name'];
+$useremail =$_SESSION['business_email'];
+}
+if (!empty($_SESSION["sp_id"])) {
+$sp_date = $_SESSION['sp_date'];
+$userId = $_SESSION['sp_id'];
+$username = $_SESSION['sp_name'];
+$useremail = $_SESSION['sp_email'];
+
+}
 
 
+
+
+?>
 
 
 
@@ -62,13 +86,23 @@ $sp_phone2 = $row['sp_phonenumber2'];
   <script src="assets/js/sweetalert.min.js"></script> 
   <script src="assets/js/jquery-1.11.3.min.js"></script>
 <script src="assets/js/flickity.pkgd.min.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
 <style type="text/css">
 
 body{
 
 	font-family: poppins;
+}
+
+.active-link{
+
+	display: none;
+}
+
+.active-button{
+
+display: none;
+
 }
 
 h1 img{
@@ -84,6 +118,19 @@ h1 img{
 	width: 180px;
 
 	margin-right: 20px;
+
+}
+
+
+
+@media only screen and (max-width:767px){
+
+.nav_login{
+
+margin-left:40px !important;
+font-weight: normal !important;
+
+}
 
 }
 
@@ -275,6 +322,10 @@ border:1px solid transparent;
 
 box-shadow: 0px 0px 4px rgba(0,0,0,0.2);
 
+margin: 10px 0px;
+
+font-size: 0.9rem !important;
+
 
 
 }
@@ -296,17 +347,6 @@ outline: 3px solid skyblue;
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
 input[type=submit]{
 
 font-size: 12px;
@@ -317,8 +357,6 @@ text-transform: capitalize;
 }
 
 
-
-
 .nav_signup{
 
 
@@ -326,7 +364,6 @@ border:1px solid none;
 border-left:1px solid white;
 border-left-color: rgba(192,192,192,1);
 margin-left:0px;
-
 
 }
 
@@ -562,6 +599,7 @@ color:black;
 border-radius: 50%;
 
 border:1px solid black;
+padding:0px 4px;
 
 }
 
@@ -732,7 +770,7 @@ display: none;
 
 @media only screen and (max-width:767px){
 
-.open-btn{display: block !important;color: black !important; margin-left: 20px;margin-top:14px;}
+.open-btn{display: block !important;color: black !important; margin-left: 20px;}
 
 
 }
@@ -1083,6 +1121,27 @@ margin-left:0px;
 
 }
 
+@media only screen and (max-width:767px){
+
+
+.nav_signup{
+
+font-weight: normal;
+
+
+}
+
+
+}
+
+
+.btn-success{
+
+	cursor: pointer;
+}
+
+
+
 .nav_login{
 
 
@@ -1272,8 +1331,6 @@ width: 140px;
 	
 echo$sp_speciality." specialized in Cars";}?> </p>
 
-
-
 <p><i class="fa fa-map-marker"></i> <?php echo$sp_location;?></p>
 
 <p><a style="color:black;" href="mailto:<?php echo$sp_email; ?>"><i class="fa fa-envelope"></i> <?php echo$sp_email;?></a></p>
@@ -1285,11 +1342,13 @@ echo$sp_speciality." specialized in Cars";}?> </p>
 
 <h6 ><b>Bio</b>:</h6> <p class="p_bio"><?php echo$sp_bio;?></p>
 
-<span><i class="fa fa-share"></i></span><br>
+<span><i class="fa fa-share-alt"></i></span><br>
 
+<?php if (!isset($userId)) {?>
+<a href="login.php?" class="btn btn-success form-control">Login to continue</a>
+<?php  } else{ ?>
 <a class="btn btn-info"  href="">Connect</a>&nbsp;<a class="btn btn-success" onclick="toggle()">Send message</a>
-
-
+<?php } ?>
 
 <br>
 
@@ -1361,30 +1420,58 @@ echo"No work picures yet";
 
 
 
-
+<!-----------------------------------------------popup------------------------------------------------------------->
 
 <div id="popup">
-
- <div class="container">
-
+<div class="container">
 <p><b>How was your experience?</b></p>
-
 <p>Rate Micheal Timothy</p>
 
-<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><br>
+<?php
+if (isset($_GET['sp_id'])) {
+require 'engine/configure.php';
+$id = mysqli_escape_string($conn,$_GET['sp_id']);
+$service_provider = mysqli_query($conn,"SELECT * from service_providers where sp_id ='$id'");
+while ($row = mysqli_fetch_array($service_provider)) {
+$id =  $row['sp_id'];
 
+if(isset($_SESSION['id'])  ||  isset($_SESSION['business_id']) ||isset($_SESSION['sp_id'])){ 
+
+if ($row['sp_ratings']>0 && $row['sp_ratings']<11) {     
+?>
+
+<span style="cursor: pointer;" id="<?php echo $id ?>" class="btn-rating" ><i class="fa fa-star" style="color: orange;"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i  class="fa fa-star"></i></span><br>
+<?php }
+
+if ($row['sp_ratings']==0){?>
+
+<span style="cursor: pointer;" id="<?php echo $id ?>" class="btn-rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></span><br>
+
+<?php
+	}
+}
+
+}
+	
+}
+
+?>
+<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><br>
 <small>Share your experience, so next time we
 can serve you better</small><br>
 
-<textarea name="vendor_review" class="form-control"></textarea>
+<form id="form-message">
 
-<span id="add_photo">Add photo</span><br>
+<input type="email" name="email" placeholder="Email" class="form-control" required="" value="<?php if(isset($_SESSION['id'])  ||  isset($_SESSION['business_id']) ||isset($_SESSION['sp_id'])){ echo $useremail;} ?>">
 
-<i class='fa fa-plus'></i><br>
+<input type="text" name="name" placeholder="Name" class="form-control" value="<?php if(isset($_SESSION['id'])  ||  isset($_SESSION['business_id']) ||isset($_SESSION['sp_id'])){ echo $username;} ?>">
 
+<textarea name="vendor_message" cols="6" class="form-control"></textarea>
 
-<input type="submit" name="submit" value="submit" class="btn btn-info"><a class="btn btn-danger" onclick="toggle()" id="close">&times;</a>
+<br>
+<input type="submit" name="submit" value="submit" style="cursor:pointer;" class="btn btn-info btn-message"><a class="btn btn-danger"  onclick="toggle()" id="close">&times;</a>
 
+</form>
 
 </div>
 
@@ -1439,8 +1526,8 @@ else{
 
 
 
-  <button style='font-size:13px;' type="button" class="btn btn-drop form-control" data-toggle="collapse" data-target="#demo">Work history<span style='float:right;' class="fa fa-caret-down"></span></button>
-  <div id="demo" class="collapse">
+  <button style='font-size:13px;' type="button" class="btn btn-drop form-control"  onclick="collapse()">Work history<span style='float:right;' class="fa fa-caret-down"></span></button>
+  <div id="demo" class="active-button">
 
 <?php
 if (isset($_GET['sp_id'])) {
@@ -1455,13 +1542,6 @@ $id =  $row['sp_id'];
 	
 }
 ?>
-
-
-
-
-
-
-
   <?php
 
 require 'engine/configure.php';
@@ -1808,12 +1888,111 @@ swal({
 
 </script>
 
+
+
+
+
+<script>
+$('#btn-message').on('click',function(e){
+e.preventDefault();
+$("#loading-image").show();
+    $.ajax({
+            type: "POST",
+            url: "engine/sp-message.php",
+            data:  $("#form-message").serialize(),
+            success: function(response) {
+            $("#loading-image").hide();
+            if (response==1) {
+          $('#bom').load(location.href + " #cy");
+          $("#conv")[0].reset();
+           swal({
+           	text:"Message sent successfully",
+            icon:"success",
+});
+}
+else{
+swal({
+    title:"Oops",
+    icon:"error",
+	text:response
+});
+}         
+},
+           error: function(jqXHR, textStatus, errorThrown) {
+            console.log(errorThrown);
+
+            }
+        });
+
+    });
+
+</script>
+<input type="text" name="email" id="email" value="<?php echo$useremail ?>">
+<script>
+$('.btn-rating').on('click',function(e){
+var id = $(this).attr('id');
+var email = $('#email').val();
+alert(id);
+alert(email);
+e.preventDefault();
+$("#loading-image").show();
+    $.ajax({
+            type: "POST",
+            url: "engine/sp-rating.php",
+            data:{'id':id,'email':email},
+            success: function(response) {
+            $("#loading-image").hide();
+            if (response==1) {
+          $('#bom').load(location.href + " #cy");
+          $("#conv")[0].reset();
+           swal({
+           	text:"Rating has been added",
+            icon:"success",
+});
+}
+else{
+swal({
+    title:"Oops",
+    icon:"error",
+	text:response
+});
+}         
+},
+           error: function(jqXHR, textStatus, errorThrown) {
+            console.log(errorThrown);
+
+            }
+        });
+
+    });
+
+</script>
+
+
+
+
+
+
+
+
+
 <!------------------------------------------btn-scroll--------------------------------------------------->
 
 <a class="btn-down" onclick="topFunction()">&#8593;</a>
 
 <script src="assets/js/scroll.js" ></script>
 <script src="assets/js/overlay.js"></script>
+
+<script type="text/javascript">
+	
+function collapse() {
+	// body...
+$('#demo').toggleClass('active-button');
+
+}
+
+
+</script>
 
 </body>
 </html>

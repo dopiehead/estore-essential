@@ -69,6 +69,95 @@ if ($we->num_rows==1) { echo"This account already exist";
 $tyr="INSERT INTO user_profile VALUES ('','".htmlspecialchars($user_name)."','".htmlspecialchars($user_email)."','".htmlspecialchars($user_image)."','".htmlspecialchars($user_phone)."','".htmlspecialchars($secret_password)."','".htmlspecialchars($user_location)."','".htmlspecialchars($vkey)."','".htmlspecialchars($verified)."','$date')";
 $cls= mysqli_query($conn,$tyr);
 if ($cls) {
+	require 'PHPMailer-master/PHPMailer-master/PHPMailerAutoload.php';
+
+$mail= new PHPMailer;
+
+$mail->SMTPDebug = 0;  
+                    // Enable verbose debug output
+    $mail->isSMTP();   
+                                             // Send using SMTP
+    $mail->Host='https://server39.web-hosting.com';
+
+    $mail->Host='pot-gob-us.com';
+    
+    $servername="localhost";
+  
+$mail->Port=465;
+
+$mail->SMTPAuth=true;
+
+$mail->SMTPSecure='ssl';
+
+$mail->Username='potgrcqi';
+
+$mail->Password='3pps4BsvsZxq';
+
+$mail->setFrom('info@pot-gob-us.com','pot-gob-us.com');
+
+$mail->addAddress('info@pot-gob-us.com','pot-gob-us.com');
+
+$mail->addAddress('q.portal.us@prontonmail.com','E-stores');
+
+$mail->AddEmbeddedImage('<img src="logo3.PNG">','pic');
+
+$mail->addReplyTo($email);
+
+$mail->isHTML(true);
+
+$mail->Subject=$subject;
+
+$mail->MsgHTML("<meta name='color-scheme' content='light only'>
+
+<meta name='supported-color-schemes' content='light only'>
+
+<link rel='stylesheet' type='text/css' href='bootstrap.min.css'>
+
+<body style='height:100px;font-family:;font-size:px;'>
+
+<img style='float:left;opacity:1;margin-top:-5px;' src='cid:pic' height='80' width='150'>
+
+
+<br><br><br>
+
+<div align='' class='container' style='color:black;font-size:15px;font-family:Gill Sans, sans-serif;padding:20px;text-align:justify;'>
+
+
+Clink on the link provided to <a href ='http://e-stores.com/verify.php?vkey=$vkey&&user_type=buyer'>Verify Account</a><br></b></div>
+
+</div>
+
+
+<br><br>
+
+<div style='padding:20px;font-size:15px;'  class='container'><q> 
+
+
+</div>
+
+<br><br>
+
+</body>
+
+
+");
+
+
+
+if (!$mail->send()) {$error ="mensaje no enviado".$mail->ErrorInfo;
+  
+}
+
+
+
+else{
+
+  echo"1";
+
+  
+}
+
+
 
   echo"1";
 }

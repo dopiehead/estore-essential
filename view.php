@@ -8,6 +8,15 @@ echo'  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mont
 echo'<div class="container jumbotron" style="margin-top:25px;font-family:poppins;font-size:0.9rem;">';
 require 'engine/configure.php';
 
+
+
+
+ $key = "987654";
+
+
+
+
+
 if (isset($_GET['id'])) {
 $id = $_GET['id'];
 }
@@ -24,7 +33,7 @@ if ($getuser) {
 echo "<h6><b style='color:skyblue;font-size:21px;'>Buyer</b></h6>";
 echo "<hr>";
 while ($row = mysqli_fetch_array($getuser)) {
-echo"<b >ID:</b> ".substr(md5($row['id']),0,6)."<br>";           
+echo"<b >ID:</b> ".$row['id'] * $key ."<br>";           
 echo"<b>Name:</b> ".$row['user_name']."<br>";
 echo"<b>Email:</b> ".$row['user_email']."<br>";
 echo"<b>Phone:</b> ".$row['user_phone']."<br>";
@@ -60,7 +69,7 @@ if ($getuser) {
 echo "<h6 style='color:skyblue;font-size:21px;'><b>Vendors</b></h6>";
 echo"<hr>";
 while ($row = mysqli_fetch_array($getuser)) {
-echo"<b>ID:</b> ".substr(md5($row['id']),0,6)."<br>";   
+echo"<b>ID:</b> ".$row['id'] * $key."<br>";   
 echo"<b>Business name:</b> ".$row['business_name']."<br>";
 echo"<b>Business email:</b> ".$row['business_email']."<br>";
 echo"<b>Business contact:</b> ".$row['business_contact']."<br>";
@@ -99,7 +108,7 @@ echo "<h6><b style='color:skyblue;font-size:21px;'>Service providers</b></h6>";
 echo"<hr>";
 
 while ($row = mysqli_fetch_array($getuser)) {
-echo"<b>ID:</b>".substr(md5($row['sp_id']),0,6)."<br>";           
+echo"<b>ID:</b>".$row['sp_id'] * $key."<br>";           
 echo"<b>Name</b>: ".$row['sp_name']."<br>";
 echo"<b>Email</b>: ".$row['sp_email']."<br>";
 echo"<b>Experience</b>: ".$row['sp_experience']."<br>";
@@ -111,13 +120,29 @@ echo"<b>Price:</b> ".$row['pricing']."<br>";
 echo"<b>Joined on</b> ".$row['date']."<br>";
 $sp_verified=$row['sp_verified'];
 if ($sp_verified>0) {
-	echo "verified";
+echo "<b>Verify:</b>&nbsp; verified<br>";
 }
 
 else{
+echo "<b>Verify: </b>&nbsp;This user not verified<br>";
+} 
 
-	echo "This user not verified";
-} } } } } ?>
+$e_verified=$row['e-verify'];
+
+if ($e_verified>0) {
+echo "<b>E-Verify:</b>&nbsp; E-verified<br>";
+}
+
+else{
+echo "<b>E-Verify:</b>&nbsp;This user has not been verified by essential";
+} 
+
+
+
+
+
+
+} } } } ?>
 
 </div>
 

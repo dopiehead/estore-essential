@@ -1,5 +1,9 @@
 
-<?php session_start(); ?>
+<?php session_start();
+
+require 'engine/get-dollar.php';
+
+ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,8 +20,9 @@
         <link rel="stylesheet" href="assets/css/btn_scroll.css">
    <link rel="stylesheet" href="assets/css/cart.css">
   <script src="assets/js/sweetalert.min.js"></script> 
-  <script src="assets/js/jquery-1.11.3.min.js"></script>
+<script src="assets/js/jquery-1.11.3.min.js"></script>
 <script src="assets/js/flickity.pkgd.min.js"></script>
+ <script src="assets/js/flickity-fade.js"></script> 
 <style type="text/css">
 	
 
@@ -27,6 +32,46 @@ body{font-family: poppins;}
 h1 img{
 
 	margin-left: 10px;
+}
+
+
+
+.flickity-page-dots{
+
+ 
+  bottom: -35px;
+}
+
+
+ .flickity-page-dots .dot{
+
+  width:100px !important;
+  height: 6px;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  
+}
+
+@media only screen and (max-width:767px){
+
+
+ .flickity-page-dots .dot{
+
+  width:40px !important;
+  height: 4px;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  
+}
+
+
+}
+
+
+
+.flickity-page-dots .dot.is-selected{
+
+  background-color:rgba(255,165,50,1);
 }
 
 
@@ -46,16 +91,23 @@ margin-left: 30px !important;
 }
 
 
+@media only screen and (max-width:767px){
 
+.nav_login{
+
+margin-left:40px !important;
+font-weight: normal !important;
+
+}
+
+}
 
 
 
 
 .product_list h6{
 
-
 font-weight: bold;
-
 margin: 23px 0px;
 
 }
@@ -72,8 +124,6 @@ margin: 23px 0px;
 .fa-cart-shopping{
 
 font-size: 14px;
-
-
 padding:3px;
 
 }
@@ -84,13 +134,9 @@ padding:3px;
 .fa-check{
 
 font-size: 12px;
-
 color: white;
-
 border:1px solid transparent;
-
 border-radius: 50%;
-
 background-color: darkgreen;
 padding:3px;
 
@@ -113,11 +159,7 @@ text-align: center;
 
 
 .section_search{
-
 text-align: left !important;
-
-
-
 }
 
 
@@ -125,9 +167,7 @@ text-align: left !important;
 
 font-size: 12px;
 position: relative;
-
 left: -3px;
-
 
 }
 
@@ -140,11 +180,7 @@ left: -3px;
 
 
 .section_search{
-
 text-align: left !important;
-
-
-
 }
 
 
@@ -152,7 +188,6 @@ text-align: left !important;
 
 font-size: 12px;
 position: relative;
-
 left: -1px;
 
 
@@ -169,26 +204,11 @@ left: -1px;
 
 .section_search input[type=search] {
 
-	
 	font-size: 14px;
-
-	width:260px !important;
-
-	margin-left: 8px;
-
-
-
-
+    width:260px !important;
+    margin-left: 8px;
 
 }
-
-
-
-
-
-
-
-
 }
 
 
@@ -223,12 +243,9 @@ left: -1px;
 
 .section_search input[type=search] {
 
-	
 	font-size: 13px;
-
-	width:205px;
-
-	margin-left: 5px;
+    width:205px;
+    margin-left: 5px;
 
 }
 
@@ -240,8 +257,8 @@ left: -1px;
 .section_search  select:focus{
 
 border:2px solid skyblue;
-
 outline: 2px solid skyblue;
+
 }
 
 
@@ -290,8 +307,7 @@ outline: 2px solid skyblue;
 	font-weight: bold;
 	text-transform: capitalize;
 	border:1px solid transparent;
-
-	box-shadow: 0px 0px 3px rgba(0,70,90,0.5);
+    box-shadow: 0px 0px 3px rgba(0,70,90,0.5);
 }
 
 
@@ -314,7 +330,7 @@ position:relative;
 top:45px;
 font-weight: bold;
 padding:3px;
-left: 80%;
+left: 79%;
 
 
 font-size:13px;
@@ -343,11 +359,8 @@ font-weight: normal !important;
 background: linear-gradient(to top right,rgba(0,70,90,0.9),rgba(0,44,70,1)),url(assets/img/coca_cola.png);
 background-size: cover;
 background-position: center;
-
 width: 100%;
-
 height: 80px;
-
 margin-top: 50px;
 
 }
@@ -395,9 +408,7 @@ top: 20px;
 
 background-color:rgba(243,243,243,0.1);padding-bottom: 8px;margin-bottom:50px;border:1px solid rgba(0,70,90,0.2);
 padding:0px;
-
 width:190px;
-
 display: inline-block;
 margin:1em 1em;
 
@@ -410,9 +421,7 @@ margin:1em 1em;
 
 background-color:rgba(243,243,243,0.1);padding-bottom: 8px;margin-bottom:50px;border:1px solid rgba(0,70,90,0.2);
 padding: 0px;
-
 width:185px;
-
 display: inline-block;
 margin:1em 1.5em;
 
@@ -421,6 +430,134 @@ margin:1em 1.5em;
 
 
 }
+
+
+
+#data_price,#data_name{
+
+  padding-left: 20px;
+  font-size: 13px;
+  text-transform: capitalize;
+}
+
+
+
+#assets_container .package  img{
+
+
+width: 210px !important;
+height: 180px !important;
+float: right;
+
+}
+
+
+@media only screen and (max-width:497px){
+
+
+
+
+#assets_container .package  img{
+
+
+width: 100%;
+
+height: 80px;
+
+
+}
+
+
+#assets_container .package{
+
+
+display: inline-block;
+
+margin-right: 20px !important;
+
+border:1px solid rgba(0,70,90,0.1);
+
+padding: 1px;
+
+width:210px !important;
+
+
+}
+
+
+
+
+
+
+}
+
+
+@media only screen and (min-width:498px) and (max-width:767px){
+
+#assets_container .package  img{
+
+
+width: 17em;
+
+height: 80px;
+
+}
+
+
+#assets_container .package{
+
+
+display: inline-block;
+
+margin-right: 20px;
+
+border:1px solid rgba(0,70,90,0.1);
+
+padding: 1px;
+
+
+}
+
+}
+
+
+
+
+
+
+
+
+#assets_container .package{
+
+
+display: inline-block;
+
+margin-right: 20px;
+
+border:1px solid rgba(0,70,90,0.1);
+
+padding: 1px;
+
+width:100%;
+
+}
+
+
+
+
+
+
+
+#assets_container {
+
+font-size: 10px;
+
+width: 100%;
+
+margin-top: 30px;
+
+}
+
 
 
 
@@ -467,21 +604,13 @@ font-size: 11px;
 .discount_main{
 
 	padding-top: 10px;
-
-	margin-top: 15px;
-
-	width: 100%;
-
-	height: 50px;
-
-	background-color: rgba(192,192,192,0.4);
-
-
-	border:1px solid transparent;
-
-	box-shadow: 0px 0px 5px rgba(0,0,0,0.3);
-
-	text-align: center;
+    margin-top: 15px;
+    width: 100%;
+    height: 50px;
+    background-color: rgba(192,192,192,0.4);
+    border:1px solid transparent;
+    box-shadow: 0px 0px 5px rgba(0,0,0,0.3);
+    text-align: center;
 }
 
 
@@ -493,9 +622,6 @@ font-size: 13px;
 
 
 .nav_login{
-
-
-
 margin-left:80px;
 font-weight: normal !important;
 
@@ -510,17 +636,11 @@ font-weight: normal !important;
 
 .button_navigation{
 
-
 font-size:12px;
-
 cursor: pointer;
-
 color:black;
-
 padding:5px 0px;
-
 margin-right:10px !important;
-
 font-weight: bold;
 
 }
@@ -536,20 +656,8 @@ font-weight: bold;
 
 
 #coca_cola img{
-
-	
 width:100%;
-
-
 }
-
-
-
-
-
-
-
-
 
 /*--------------------------------------------------------------
 # navigation bar 
@@ -615,21 +723,7 @@ color: white;
 
 
 @media only screen and (max-width:480px){
-
-
-
-
-
-
-
 }
-
-
-
-
-
-
-
 
 /*--------------------------------------------------------------
 # navigation bar img
@@ -847,14 +941,52 @@ display: none;
 
 <br><br>
 
+
 <div class="container">
+
+
+<?php
+
+require 'engine/configure.php';
+$featured = mysqli_query($conn,"SELECT * FROM item_detail where sold = 0 and featured = 1 order by id desc");
+if ($featured->num_rows>0) { ?>
+
+<h6><b style="color: white; background-color: rgba(0,70,90,0.8);padding: 5px;">Featured</b></h6><br>
+
+<div class="assets_container featured container">
+<?php
+while ($getfeaturedProducts = mysqli_fetch_array($featured)) { ?>
+<div class="package" style="border:1px solid rgba(0,0,0,0.1);margin-right:25px;">
+<span style="padding:5px;" id="data_name"><?php echo$getfeaturedProducts['product_name']?></span><br>
+<span style="opacity: 0.5" id="data_price">From<br></span>
+<span style="opacity: 0.5" id="data_price"> <?php echo$getfeaturedProducts['product_price']?></span>
+<span style="opacity: 0.5" id="data_price"> <?php echo" $ ".round($getfeaturedProducts['product_price']/$dollar_rate)?></span><br>
+
+<a href="product-details.php?id=<?php echo$id ?>"><img style="height: 150px; width:200px;" src='<?php echo$getfeaturedProducts['product_image']?>' ></a><br>
+</div>
+	
+
+
+<?php } echo'</div>'; } else{   ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <div class="row">
 
 <div id="coca_cola" class="col-md-6">
 
-	<img src="assets/img/coca_cola.png">
-
+<img src="assets/img/coca_cola.png">
 </div>
 
 
@@ -866,8 +998,10 @@ ng">
 
 </div>
 
-</div>
 
+
+</div>
+<?php       }     ?>
 
 <div id="main">
 	
@@ -895,7 +1029,6 @@ while ($datafound = mysqli_fetch_array($categoryList)) {
 	
 	$categories = $datafound['e_auto_categories'];
 ?>
-
 
 
 
@@ -980,17 +1113,31 @@ success:function(data) {
 $("#loading-image").hide();
 $(".blogspot").html(data).show();
 
-  }
+}
 
 
 });
 
 
 };
+</script>
 
 
+
+<script>
+  
+$('.featured').flickity({
+ cellAlign: 'left',
+contain: true,
+autoPlay:1500,
+wrapAround:true,
+fade:true
+});
 
 </script>
+
+
+
 <!------------------------------------------btn-scroll--------------------------------------------------->
 
 <a class="btn-down" onclick="topFunction()">&#8593;</a>
